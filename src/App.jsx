@@ -399,13 +399,37 @@ function Waitlist() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+const [error, setError] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // In production, POST to your waitlist endpoint or Mailchimp
-    await new Promise(r => setTimeout(r, 800));
-    setSubmitted(true);
-    setLoading(false);
+    setError(null);
+    try {
+      const res = await fetch(
+        "https://nkjfluakvaatkcygwkhj.supabase.co/rest/v1/waitlist",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": "sb_publishable_XHDlAicw8iGxk5obabpNmw_Dt4layfq",
+            "Prefer": "return=minimal",
+          },
+          body: JSON.stringify({ email: email.toLowerCase(), role }),
+        }
+      );
+      if (res.status === 409 || res.status === 400) {
+        setSubmitted(true);
+      } else if (!res.ok) {
+        throw new Error("Something went wrong. Please try again.");
+      } else {
+        setSubmitted(true);
+      }
+    } catch (err) {
+      setError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
