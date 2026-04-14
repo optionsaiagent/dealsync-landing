@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 const FONTS = `@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap');`;
 
@@ -38,8 +39,6 @@ function GlowOrb({ top, left, size = 400, color = T.teal, opacity = 0.04 }) {
   return <div style={{ position: "absolute", top, left, width: size, height: size, borderRadius: "50%", background: color, opacity, filter: `blur(${size/3}px)`, pointerEvents: "none" }} />;
 }
 
-// ─── Sections ───
-
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -56,7 +55,8 @@ function Nav() {
           <span style={{ fontSize: 22, fontWeight: 300, color: T.white }}>Sync</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          <a href="#how-it-works" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font, transition: "color 0.2s" }}>How it works</a>
+          <a href="#problem" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>The problem</a>
+          <a href="#how-it-works" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>How it works</a>
           <a href="#pricing" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>Pricing</a>
           <a href="#waitlist" style={{ padding: "9px 22px", borderRadius: 8, background: T.teal, color: T.navy, fontSize: 13, fontWeight: 600, textDecoration: "none", fontFamily: T.font }}>Get early access</a>
         </div>
@@ -70,38 +70,33 @@ function Hero() {
     <section style={{ position: "relative", overflow: "hidden", padding: "160px 32px 100px", textAlign: "center" }}>
       <GlowOrb top="-200px" left="10%" size={600} color={T.teal} opacity={0.05} />
       <GlowOrb top="100px" left="70%" size={500} color={T.sky} opacity={0.03} />
-
-      <div style={{ position: "relative", maxWidth: 800, margin: "0 auto" }}>
+      <div style={{ position: "relative", maxWidth: 820, margin: "0 auto" }}>
         <FadeIn>
           <div style={{ display: "inline-block", padding: "6px 16px", borderRadius: 20, background: T.surface, border: `1px solid ${T.tealBorder}`, marginBottom: 28 }}>
             <span style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 0.5 }}>Built by a 25-year LO for LOs and Realtors</span>
           </div>
         </FadeIn>
-
         <FadeIn delay={0.1}>
-          <h1 style={{ fontSize: 56, fontWeight: 700, fontFamily: T.display, color: T.white, lineHeight: 1.1, marginBottom: 20, letterSpacing: -1 }}>
-            Stop texting<br />
-            <span style={{ fontStyle: "italic", fontWeight: 400, color: T.teal }}>"What's the status?"</span>
+          <h1 style={{ fontSize: 54, fontWeight: 700, fontFamily: T.display, color: T.white, lineHeight: 1.1, marginBottom: 20, letterSpacing: -1 }}>
+            Every referral deserves<br />
+            <span style={{ fontStyle: "italic", fontWeight: 400, color: T.teal }}>a deal room, not a dead end</span>
           </h1>
         </FadeIn>
-
         <FadeIn delay={0.2}>
-          <p style={{ fontSize: 19, color: T.ghost, lineHeight: 1.65, maxWidth: 580, margin: "0 auto 36px", fontWeight: 300 }}>
-            DealSync is the shared deal room where Loan Officers and Realtors track deals together. One card. Two views. Zero guesswork.
+          <p style={{ fontSize: 19, color: T.ghost, lineHeight: 1.65, maxWidth: 620, margin: "0 auto 36px", fontWeight: 300 }}>
+            DealSync is the shared deal room where Loan Officers and Realtors track every lead from first conversation to closing day. No more forgotten follow-ups. No more lost referrals. Just one place where both sides see everything.
           </p>
         </FadeIn>
-
         <FadeIn delay={0.3}>
           <div style={{ display: "flex", justifyContent: "center", gap: 14 }}>
-            <a href="#waitlist" style={{ padding: "14px 36px", borderRadius: 10, background: T.teal, color: T.navy, fontSize: 15, fontWeight: 600, textDecoration: "none", fontFamily: T.font, boxShadow: `0 0 40px ${T.tealGlow}, 0 4px 16px rgba(0,0,0,0.3)`, transition: "transform 0.2s" }}>
+            <a href="#waitlist" style={{ padding: "14px 36px", borderRadius: 10, background: T.teal, color: T.navy, fontSize: 15, fontWeight: 600, textDecoration: "none", fontFamily: T.font, boxShadow: `0 0 40px ${T.tealGlow}, 0 4px 16px rgba(0,0,0,0.3)` }}>
               Get early access — free
             </a>
-            <a href="#how-it-works" style={{ padding: "14px 36px", borderRadius: 10, background: "transparent", border: `1px solid ${T.borderLight}`, color: T.ghost, fontSize: 15, fontWeight: 500, textDecoration: "none", fontFamily: T.font }}>
+            <a href="#problem" style={{ padding: "14px 36px", borderRadius: 10, background: "transparent", border: `1px solid ${T.borderLight}`, color: T.ghost, fontSize: 15, fontWeight: 500, textDecoration: "none", fontFamily: T.font }}>
               See how it works
             </a>
           </div>
         </FadeIn>
-
         <FadeIn delay={0.5}>
           <p style={{ fontSize: 12, color: T.ghostDim, marginTop: 20 }}>Free for Realtors. Always.</p>
         </FadeIn>
@@ -112,29 +107,33 @@ function Hero() {
 
 function PainPoints() {
   const pains = [
-    { icon: "?", color: T.coral, title: "The black hole", desc: "A Realtor refers a buyer. The LO enters them into their CRM. The Realtor enters them into theirs. Neither system talks to the other." },
-    { icon: "↻", color: T.amber, title: "Endless status checks", desc: '"Did the appraisal come in?" "Is the rate locked?" "When is CTC?" — the same questions, every deal, every week, via text.' },
-    { icon: "✕", color: T.coral, title: "Dropped balls", desc: "A missed update leads to a missed deadline. The client gets frustrated. The referral relationship takes a hit." },
+    { icon: "?", color: T.coral, title: "The referral black hole", desc: "A Realtor refers a buyer to an LO. They have a great phone call. But the buyer isn't ready to apply yet. Three weeks later, nobody remembers what was discussed — and the lead goes cold." },
+    { icon: "↻", color: T.amber, title: "Follow-ups fall through the cracks", desc: "That buyer who said 'call me in 60 days'? Without a shared system, it's a sticky note on a monitor. By the time someone follows up, the buyer already talked to another lender." },
+    { icon: "✕", color: T.coral, title: "Conversations disappear", desc: "The LO had a detailed call about the buyer's DTI concerns, their VA eligibility, their timeline. None of it was captured where the Realtor can see it. So the Realtor is flying blind." },
+    { icon: "◷", color: T.amber, title: "Status checks never end", desc: "Once a deal is in escrow, it's 'What's the status on the Smith file?' every week — by text, by call, by email. Neither side has a single place to look." },
   ];
 
   return (
-    <section style={{ padding: "80px 32px", position: "relative" }}>
+    <section id="problem" style={{ padding: "80px 32px", position: "relative" }}>
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <FadeIn>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <p style={{ fontSize: 12, color: T.coral, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>The problem</p>
-            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.2 }}>Your CRM doesn't know<br />your partner exists</h2>
+            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.2 }}>
+              You're not losing deals at closing.<br />
+              <span style={{ color: T.ghost, fontWeight: 400 }}>You're losing them at "I'm not ready yet."</span>
+            </h2>
+            <p style={{ fontSize: 15, color: T.ghostDim, marginTop: 16, maxWidth: 640, margin: "16px auto 0", lineHeight: 1.6 }}>
+              Most LO-Realtor tools focus on the escrow phase. But the biggest leakage in your pipeline happens before a buyer ever fills out an application — in the weeks and months between first contact and "I'm ready to move forward."
+            </p>
           </div>
         </FadeIn>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
           {pains.map((p, i) => (
-            <FadeIn key={i} delay={i * 0.12}>
-              <div style={{ padding: "32px 28px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.border}`, height: "100%" }}>
-                <div style={{ width: 44, height: 44, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, marginBottom: 20, background: `${p.color}15`, color: p.color, border: `1px solid ${p.color}30` }}>
-                  {p.icon}
-                </div>
-                <h3 style={{ fontSize: 18, fontWeight: 600, color: T.white, marginBottom: 10, fontFamily: T.display }}>{p.title}</h3>
+            <FadeIn key={i} delay={i * 0.1}>
+              <div style={{ padding: "28px 24px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.border}`, height: "100%" }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, marginBottom: 16, background: `${p.color}15`, color: p.color, border: `1px solid ${p.color}30` }}>{p.icon}</div>
+                <h3 style={{ fontSize: 17, fontWeight: 600, color: T.white, marginBottom: 8, fontFamily: T.display }}>{p.title}</h3>
                 <p style={{ fontSize: 14, color: T.ghostDim, lineHeight: 1.65 }}>{p.desc}</p>
               </div>
             </FadeIn>
@@ -145,23 +144,63 @@ function PainPoints() {
   );
 }
 
-function HowItWorks() {
-  const steps = [
-    {
-      num: "01", title: "LO creates a deal", desc: "Enter the borrower, property, and loan details. It takes 30 seconds.",
-      loView: ["Pre-approval: Approved", "Rate: 5.875% locked", "Appraisal: $700K received", "Conditional approval: Mar 25"],
-      reView: null,
-    },
-    {
-      num: "02", title: "Invite your Realtor", desc: "One click sends them an invite. They join for free — instantly see the deal card with real-time loan status.",
-      loView: null,
-      reView: ["Sales price: $685,000", "Under contract: Mar 5", "Home inspection: Passed", "Final walkthrough: Apr 10"],
-    },
-    {
-      num: "03", title: "Both sides update. Both sides see.", desc: "The LO updates loan milestones. The Realtor updates property milestones. The activity feed logs everything automatically.",
-      loView: ["Clear to Close!", "Wire instructions sent", "Closing confirmed Apr 15"],
-      reView: ["Final walkthrough scheduled", "Closing date confirmed", "Keys ready for handoff"],
-    },
+function ConversionImpact() {
+  const stats = [
+    { value: "80%", label: "of referred leads need follow-up beyond the first call", color: T.coral },
+    { value: "67%", label: "of buyers choose the first lender who follows up", color: T.teal },
+    { value: "5-12", label: "touchpoints needed to convert a referral into an application", color: T.amber },
+  ];
+
+  return (
+    <section style={{ padding: "60px 32px" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <FadeIn>
+          <div style={{ padding: "36px 40px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}` }}>
+            <div style={{ textAlign: "center", marginBottom: 32 }}>
+              <h2 style={{ fontSize: 26, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 8 }}>The follow-up gap is where deals die</h2>
+              <p style={{ fontSize: 14, color: T.ghostDim, lineHeight: 1.6 }}>When LOs and Realtors don't have shared visibility, leads slip through the cracks between "interested" and "ready."</p>
+            </div>
+            <div style={{ display: "flex", gap: 24 }}>
+              {stats.map((s, i) => (
+                <div key={i} style={{ flex: 1, textAlign: "center", padding: "20px 16px", borderRadius: 10, background: T.surface, border: `1px solid ${T.border}` }}>
+                  <div style={{ fontSize: 36, fontWeight: 700, fontFamily: T.display, color: s.color, marginBottom: 8 }}>{s.value}</div>
+                  <div style={{ fontSize: 12, color: T.ghostDim, lineHeight: 1.5 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+function FullJourney() {
+  const stages = [
+    { num: "01", label: "Referral", color: T.sky, title: "The lead comes in", desc: "A Realtor refers a buyer. An LO gets a call from a prospect. Instead of scribbling on a notepad or entering it into a CRM the other side can't see — both parties create a shared deal card in seconds.", mockItems: [
+      { text: "Lead source: Agent referral — Will Campbell", color: T.sky },
+      { text: "First contact: Apr 10, 2026 — phone call", color: T.ghostDim },
+      { text: "Buyer timeline: 2-3 months", color: T.ghostDim },
+      { text: "Notes: VA eligible, looking at Kapolei/Ewa Beach", color: T.amber },
+    ]},
+    { num: "02", label: "Nurture", color: T.amber, title: "Nobody gets forgotten", desc: "The buyer isn't ready yet — and that's fine. DealSync keeps the lead visible to both the LO and Realtor. Conversation notes, follow-up reminders, and status updates all live on the shared deal card. When the buyer calls back in 6 weeks, both sides know exactly where they left off.", mockItems: [
+      { text: "Follow-up note: Buyer checking on lease expiration date", color: T.amber },
+      { text: "LO note: Discussed DTI at 42%, needs to pay off car loan first", color: T.sky },
+      { text: "Agent note: Showing them Kapolei listings to keep engagement", color: T.amber },
+      { text: "Status: Nurturing — next follow-up May 15", color: T.teal },
+    ]},
+    { num: "03", label: "Pre-approval", color: T.teal, title: "They're ready — and you're prepared", desc: "When the buyer says 'let's do this,' the LO already has every conversation documented. No starting from scratch. The pre-approval process moves faster because the groundwork was laid during nurture. The Realtor sees the approval in real time — and starts scheduling showings immediately.", mockItems: [
+      { text: "Pre-approval: Approved — $725,000", color: T.teal },
+      { text: "Loan program: VA Purchase 30yr Fixed", color: T.sky },
+      { text: "Rate: 5.875% (not locked yet)", color: T.ghostDim },
+      { text: "Agent notified: Showing schedule started", color: T.amber },
+    ]},
+    { num: "04", label: "Escrow", color: T.teal, title: "Both sides track every milestone", desc: "Under contract to closing day — the LO tracks loan milestones, the Realtor tracks property milestones. Both see the full picture on one card. No more 'What's the status?' texts.", mockItems: [
+      { text: "Conditional approval: Mar 25", color: T.sky },
+      { text: "Appraisal: $700K — received Mar 22", color: T.sky },
+      { text: "Home inspection: Passed", color: T.teal },
+      { text: "Clear to Close!", color: T.teal },
+    ]},
   ];
 
   return (
@@ -170,76 +209,53 @@ function HowItWorks() {
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <FadeIn>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
-            <p style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>How it works</p>
-            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.2 }}>One deal card.<br />Two perspectives.</h2>
+            <p style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>The full journey</p>
+            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.2 }}>From first conversation<br />to closing day</h2>
+            <p style={{ fontSize: 15, color: T.ghostDim, maxWidth: 560, margin: "16px auto 0", lineHeight: 1.6 }}>DealSync doesn't start at escrow. It starts the moment a lead enters your world — and stays with them until they get their keys.</p>
           </div>
         </FadeIn>
-
-        {steps.map((step, i) => (
-          <FadeIn key={i} delay={0.1}>
-            <div style={{ display: "flex", gap: 48, alignItems: "flex-start", marginBottom: 64, flexDirection: i % 2 === 1 ? "row-reverse" : "row" }}>
-              {/* Text */}
-              <div style={{ flex: 1, paddingTop: 20 }}>
-                <span style={{ fontSize: 48, fontWeight: 700, fontFamily: T.display, color: T.teal, opacity: 0.2, lineHeight: 1 }}>{step.num}</span>
-                <h3 style={{ fontSize: 26, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12, marginTop: -8 }}>{step.title}</h3>
-                <p style={{ fontSize: 15, color: T.ghostDim, lineHeight: 1.65 }}>{step.desc}</p>
+        <div style={{ display: "flex", justifyContent: "center", gap: 4, marginBottom: 56 }}>
+          {stages.map((s, i) => (
+            <FadeIn key={i} delay={i * 0.08}>
+              <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <div style={{ padding: "8px 20px", borderRadius: 20, background: `${s.color}15`, border: `1px solid ${s.color}30`, display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: 11, fontWeight: 600, color: s.color }}>{s.num}</span>
+                  <span style={{ fontSize: 12, fontWeight: 500, color: s.color }}>{s.label}</span>
+                </div>
+                {i < stages.length - 1 && <div style={{ width: 24, height: 1, background: T.border }} />}
               </div>
-
-              {/* Mini card mockup */}
+            </FadeIn>
+          ))}
+        </div>
+        {stages.map((stage, i) => (
+          <FadeIn key={i} delay={0.1}>
+            <div style={{ display: "flex", gap: 48, alignItems: "flex-start", marginBottom: 56, flexDirection: i % 2 === 1 ? "row-reverse" : "row" }}>
+              <div style={{ flex: 1, paddingTop: 12 }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "4px 14px", borderRadius: 16, background: `${stage.color}12`, border: `1px solid ${stage.color}25`, marginBottom: 14 }}>
+                  <span style={{ fontSize: 11, fontWeight: 600, color: stage.color }}>{stage.num}</span>
+                  <span style={{ fontSize: 12, fontWeight: 500, color: stage.color }}>{stage.label}</span>
+                </div>
+                <h3 style={{ fontSize: 24, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>{stage.title}</h3>
+                <p style={{ fontSize: 15, color: T.ghostDim, lineHeight: 1.7 }}>{stage.desc}</p>
+              </div>
               <div style={{ flex: 1 }}>
                 <div style={{ borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}`, overflow: "hidden" }}>
-                  {/* Card header */}
-                  <div style={{ padding: "16px 20px", borderBottom: `1px solid ${T.border}`, background: `linear-gradient(135deg, ${T.navyMid}, ${T.navyLight})` }}>
+                  <div style={{ padding: "14px 18px", borderBottom: `1px solid ${T.border}`, background: `linear-gradient(135deg, ${T.navyMid}, ${T.navyLight})` }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div>
-                        <div style={{ fontSize: 15, fontWeight: 600, color: T.white, fontFamily: T.display }}>David & Lisa Nakamura</div>
-                        <div style={{ fontSize: 11, color: T.ghostDim }}>1545 Ala Wai Blvd #402, Honolulu</div>
+                        <div style={{ fontSize: 14, fontWeight: 600, color: T.white, fontFamily: T.display }}>Michael & Angela Torres</div>
+                        <div style={{ fontSize: 11, color: T.ghostDim }}>Kapolei, HI · VA Purchase</div>
                       </div>
-                      <div style={{ padding: "4px 12px", borderRadius: 16, background: `${T.teal}18`, border: `1px solid ${T.teal}30`, fontSize: 12, color: T.teal, fontWeight: 500 }}>$685,000</div>
+                      <div style={{ padding: "3px 10px", borderRadius: 12, background: `${stage.color}18`, border: `1px solid ${stage.color}30`, fontSize: 11, color: stage.color, fontWeight: 500 }}>{stage.label}</div>
                     </div>
                   </div>
-
-                  {/* Card body — show the relevant view */}
-                  <div style={{ padding: "16px 20px" }}>
-                    {(step.loView || step.reView) && (
-                      <div style={{ display: "flex", gap: 16 }}>
-                        {step.loView && (
-                          <div style={{ flex: 1 }}>
-                            <div style={{ fontSize: 9, color: T.sky, fontWeight: 500, letterSpacing: 1, textTransform: "uppercase", marginBottom: 8 }}>LO view</div>
-                            {step.loView.map((item, j) => (
-                              <div key={j} style={{ fontSize: 12, color: T.ghost, padding: "5px 0", borderBottom: `1px solid ${T.border}` }}>{item}</div>
-                            ))}
-                          </div>
-                        )}
-                        {step.reView && (
-                          <div style={{ flex: 1 }}>
-                            <div style={{ fontSize: 9, color: T.amber, fontWeight: 500, letterSpacing: 1, textTransform: "uppercase", marginBottom: 8 }}>Realtor view</div>
-                            {step.reView.map((item, j) => (
-                              <div key={j} style={{ fontSize: 12, color: T.ghost, padding: "5px 0", borderBottom: `1px solid ${T.border}` }}>{item}</div>
-                            ))}
-                          </div>
-                        )}
+                  <div style={{ padding: "14px 18px" }}>
+                    {stage.mockItems.map((item, j) => (
+                      <div key={j} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: j < stage.mockItems.length - 1 ? `1px solid ${T.border}` : "none" }}>
+                        <div style={{ width: 5, height: 5, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
+                        <span style={{ fontSize: 12, color: item.color === T.ghostDim ? T.ghost : item.color }}>{item.text}</span>
                       </div>
-                    )}
-
-                    {step.num === "03" && (
-                      <div>
-                        <div style={{ fontSize: 9, color: T.ghostDim, fontWeight: 500, letterSpacing: 1, textTransform: "uppercase", marginBottom: 8 }}>Activity feed</div>
-                        {[
-                          { icon: "★", color: T.teal, text: "Clear to Close!", who: "Jay Miller", time: "2h ago" },
-                          { icon: "↑", color: T.sky, text: "Final walkthrough scheduled", who: "Will Campbell", time: "4h ago" },
-                          { icon: "✎", color: T.amber, text: "Wire instructions sent to borrower", who: "Jay Miller", time: "Yesterday" },
-                        ].map((a, j) => (
-                          <div key={j} style={{ display: "flex", gap: 8, alignItems: "flex-start", padding: "6px 0", borderBottom: j < 2 ? `1px solid ${T.border}` : "none" }}>
-                            <div style={{ width: 22, height: 22, borderRadius: 5, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, background: `${a.color}18`, color: a.color, flexShrink: 0, marginTop: 1 }}>{a.icon}</div>
-                            <div>
-                              <div style={{ fontSize: 12, color: T.white }}>{a.text}</div>
-                              <div style={{ fontSize: 10, color: T.ghostDim }}>{a.who} · {a.time}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                    ))}
                   </div>
                 </div>
               </div>
@@ -251,14 +267,71 @@ function HowItWorks() {
   );
 }
 
+function ConversationIntel() {
+  return (
+    <section style={{ padding: "80px 32px", position: "relative" }}>
+      <GlowOrb top="-50px" left="60%" size={400} color={T.amber} opacity={0.03} />
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <FadeIn>
+          <div style={{ display: "flex", gap: 40, alignItems: "center" }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: "inline-block", padding: "4px 14px", borderRadius: 16, background: `${T.amber}12`, border: `1px solid ${T.amber}25`, marginBottom: 14 }}>
+                <span style={{ fontSize: 12, fontWeight: 500, color: T.amber }}>Coming soon</span>
+              </div>
+              <h2 style={{ fontSize: 30, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.3, marginBottom: 14 }}>
+                Every conversation,<br />captured and shared
+              </h2>
+              <p style={{ fontSize: 15, color: T.ghostDim, lineHeight: 1.7, marginBottom: 20 }}>
+                Imagine this: your LO has a 20-minute phone call with a buyer about their VA eligibility, their debt-to-income concerns, and their 90-day timeline. Instead of that conversation living in the LO's head — it gets captured, summarized, and attached to the deal card where both the LO and Realtor can reference it months later.
+              </p>
+              <p style={{ fontSize: 15, color: T.ghostDim, lineHeight: 1.7 }}>
+                When the buyer calls back in 8 weeks, both partners know exactly what was discussed, what was decided, and what the next steps are. No memory gaps. No starting over. Just seamless continuity.
+              </p>
+            </div>
+            <div style={{ flex: 0.85 }}>
+              <div style={{ borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}`, overflow: "hidden" }}>
+                <div style={{ padding: "12px 16px", borderBottom: `1px solid ${T.border}`, display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ width: 24, height: 24, borderRadius: 6, background: `${T.amber}18`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, color: T.amber }}>◷</div>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 500, color: T.white }}>Call summary — Apr 10, 2026</div>
+                    <div style={{ fontSize: 10, color: T.ghostDim }}>Jay Miller with Michael Torres · 18 min</div>
+                  </div>
+                </div>
+                <div style={{ padding: "14px 16px" }}>
+                  {[
+                    { label: "VA eligibility", text: "Confirmed — COE available. 10 years active duty Army." },
+                    { label: "Timeline", text: "Lease expires July 31. Wants to close by mid-July." },
+                    { label: "Budget concern", text: "DTI at 44% with car loan. Payoff in May brings it to 38%." },
+                    { label: "Next steps", text: "Follow up May 15 after car payoff. Send VA benefit overview." },
+                    { label: "Property interest", text: "Kapolei/Ewa Beach. SFR preferred. $800K-$900K range." },
+                  ].map((item, i) => (
+                    <div key={i} style={{ marginBottom: 10 }}>
+                      <div style={{ fontSize: 10, color: T.amber, fontWeight: 500, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 2 }}>{item.label}</div>
+                      <div style={{ fontSize: 12, color: T.ghost, lineHeight: 1.5 }}>{item.text}</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ padding: "10px 16px", borderTop: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 10, color: T.ghostDim }}>Visible to: LO and Realtor</span>
+                  <span style={{ fontSize: 10, color: T.teal }}>Attached to deal card</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
 function ValueProps() {
   const props = [
-    { icon: "⚡", color: T.teal, title: "Zero learning curve", desc: "If you can read a text message, you can use DealSync. No training needed. No configuration required." },
-    { icon: "⊕", color: T.sky, title: "Invite-to-join growth", desc: "LOs invite their Realtors. Realtors invite their other LOs. The network grows itself." },
-    { icon: "◷", color: T.amber, title: "Real-time activity feed", desc: "Every update is logged automatically. No more asking. No more wondering. Just open the deal card." },
-    { icon: "▤", color: T.ghost, title: "Role-based views", desc: "Each side sees exactly what they need. LOs see loan milestones. Realtors see property milestones. Both see the big picture." },
-    { icon: "★", color: T.teal, title: "Partner scorecard", desc: "See which partnerships are closing deals and which need attention. Data-driven relationship management." },
-    { icon: "✎", color: T.amber, title: "Private & shared notes", desc: "Keep internal notes private or share updates with your partner. You control the visibility." },
+    { icon: "⊕", color: T.teal, title: "Shared from day one", desc: "The moment a lead enters the system, both the LO and Realtor can see it. No waiting until escrow to start collaborating." },
+    { icon: "✎", color: T.amber, title: "Conversation notes that stick", desc: "Every phone call, every meeting, every discussion — captured on the deal card where both partners can reference it weeks or months later." },
+    { icon: "◷", color: T.sky, title: "Follow-ups that don't slip", desc: "Leads in nurture stay visible. Status updates, next-step reminders, and timeline tracking keep both sides accountable." },
+    { icon: "⚡", color: T.teal, title: "Zero learning curve", desc: "If you can read a text message, you can use DealSync. No training. No configuration. No CRM migration required." },
+    { icon: "★", color: T.amber, title: "Partner scorecard", desc: "See which partnerships are converting referrals into closings — and which need attention. Data-driven relationship management." },
+    { icon: "▤", color: T.ghost, title: "Role-based views", desc: "LOs see loan milestones. Realtors see property milestones. Both see the full picture. Private notes stay private." },
   ];
 
   return (
@@ -268,13 +341,13 @@ function ValueProps() {
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <p style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>Why DealSync</p>
             <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white }}>Not a CRM replacement.<br />The layer between them.</h2>
+            <p style={{ fontSize: 15, color: T.ghostDim, maxWidth: 560, margin: "12px auto 0", lineHeight: 1.6 }}>Your LO has a CRM. Your Realtor has a CRM. What's missing is the shared space between them — from first referral to closing day.</p>
           </div>
         </FadeIn>
-
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
           {props.map((p, i) => (
             <FadeIn key={i} delay={i * 0.08}>
-              <div style={{ padding: "28px 24px", borderRadius: 12, background: T.surface, border: `1px solid ${T.border}`, transition: "border-color 0.2s" }}>
+              <div style={{ padding: "28px 24px", borderRadius: 12, background: T.surface, border: `1px solid ${T.border}` }}>
                 <div style={{ width: 36, height: 36, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, marginBottom: 16, background: `${p.color}12`, color: p.color, border: `1px solid ${p.color}25` }}>{p.icon}</div>
                 <h3 style={{ fontSize: 15, fontWeight: 600, color: T.white, marginBottom: 6 }}>{p.title}</h3>
                 <p style={{ fontSize: 13, color: T.ghostDim, lineHeight: 1.6 }}>{p.desc}</p>
@@ -289,21 +362,9 @@ function ValueProps() {
 
 function Pricing() {
   const tiers = [
-    {
-      name: "Realtor Partner", price: "Free", period: "forever", color: T.amber, highlight: false,
-      desc: "For Real Estate Agents invited by their LO partners.",
-      features: ["Unlimited shared deals", "Real-time loan status updates", "Activity feed & notifications", "Mobile app access", "Add notes & updates"],
-    },
-    {
-      name: "Solo LO", price: "$49", period: "/month", color: T.teal, highlight: true,
-      desc: "For independent originators who want to strengthen every Realtor relationship.",
-      features: ["Everything in Free", "Unlimited partner invites", "Unlimited active deals", "Partner scorecard & analytics", "Priority support", "14-day free trial"],
-    },
-    {
-      name: "Mortgage Team", price: "$129", period: "/month", color: T.sky, highlight: false,
-      desc: "For small LO teams who share Realtor networks.",
-      features: ["Everything in Solo", "Up to 5 LO seats", "Team-level reporting", "Shared partner networks", "Lead routing between LOs"],
-    },
+    { name: "Realtor Partner", price: "Free", period: "forever", color: T.amber, highlight: false, desc: "For Real Estate Agents invited by their LO partners.", features: ["Unlimited shared deals", "Real-time loan status updates", "Activity feed and notifications", "Conversation notes and history", "Mobile app access"] },
+    { name: "Solo LO", price: "$49", period: "/month", color: T.teal, highlight: true, desc: "For independent originators who want to convert more referrals into closings.", features: ["Everything in Free", "Unlimited partner invites", "Unlimited active deals", "Partner scorecard and analytics", "Lead nurture tracking", "Priority support", "14-day free trial"] },
+    { name: "Mortgage Team", price: "$129", period: "/month", color: T.sky, highlight: false, desc: "For small LO teams who share referral networks.", features: ["Everything in Solo", "Up to 5 LO seats", "Team-level reporting", "Shared partner networks", "Lead routing between LOs"] },
   ];
 
   return (
@@ -313,51 +374,35 @@ function Pricing() {
         <FadeIn>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <p style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>Pricing</p>
-            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>Less than the cost of<br />taking a Realtor to lunch</h2>
+            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>Less than the cost of<br />one lost referral</h2>
             <p style={{ fontSize: 15, color: T.ghostDim }}>LOs pay. Realtors are always free.</p>
           </div>
         </FadeIn>
-
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, alignItems: "start" }}>
           {tiers.map((tier, i) => (
             <FadeIn key={i} delay={i * 0.1}>
-              <div style={{
-                padding: "32px 28px", borderRadius: 14,
-                background: tier.highlight ? `linear-gradient(160deg, ${T.navyMid}, ${T.navyLight})` : T.navyLight,
-                border: `1px solid ${tier.highlight ? T.tealBorder : T.border}`,
-                position: "relative", overflow: "hidden",
-              }}>
+              <div style={{ padding: "32px 28px", borderRadius: 14, background: tier.highlight ? `linear-gradient(160deg, ${T.navyMid}, ${T.navyLight})` : T.navyLight, border: `1px solid ${tier.highlight ? T.tealBorder : T.border}`, position: "relative", overflow: "hidden" }}>
                 {tier.highlight && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${T.teal}, ${T.tealDim})` }} />}
-
                 <div style={{ fontSize: 13, fontWeight: 600, color: tier.color, marginBottom: 4, letterSpacing: 0.3 }}>{tier.name}</div>
                 <div style={{ marginBottom: 12 }}>
                   <span style={{ fontSize: 42, fontWeight: 700, fontFamily: T.display, color: T.white }}>{tier.price}</span>
                   <span style={{ fontSize: 14, color: T.ghostDim, marginLeft: 2 }}>{tier.period}</span>
                 </div>
                 <p style={{ fontSize: 13, color: T.ghostDim, lineHeight: 1.5, marginBottom: 24, minHeight: 40 }}>{tier.desc}</p>
-
                 <div style={{ marginBottom: 24 }}>
                   {tier.features.map((f, j) => (
                     <div key={j} style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 0", fontSize: 13, color: T.ghost }}>
-                      <span style={{ color: tier.color, fontSize: 11, flexShrink: 0 }}>✓</span>
-                      {f}
+                      <span style={{ color: tier.color, fontSize: 11, flexShrink: 0 }}>✓</span>{f}
                     </div>
                   ))}
                 </div>
-
-                <a href="#waitlist" style={{
-                  display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, textDecoration: "none", fontFamily: T.font, fontSize: 13, fontWeight: 600,
-                  background: tier.highlight ? T.teal : "transparent",
-                  color: tier.highlight ? T.navy : T.teal,
-                  border: tier.highlight ? "none" : `1px solid ${T.tealBorder}`,
-                }}>
+                <a href="#waitlist" style={{ display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, textDecoration: "none", fontFamily: T.font, fontSize: 13, fontWeight: 600, background: tier.highlight ? T.teal : "transparent", color: tier.highlight ? T.navy : T.teal, border: tier.highlight ? "none" : `1px solid ${T.tealBorder}` }}>
                   {tier.price === "Free" ? "Join when invited" : "Start free trial"}
                 </a>
               </div>
             </FadeIn>
           ))}
         </div>
-
         <FadeIn delay={0.3}>
           <div style={{ textAlign: "center", marginTop: 32 }}>
             <p style={{ fontSize: 13, color: T.ghostDim }}>Need 10+ seats? <span style={{ color: T.teal, cursor: "pointer" }}>Contact us for Branch pricing</span></p>
@@ -442,7 +487,6 @@ function Waitlist() {
           <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>Be first in the deal room</h2>
           <p style={{ fontSize: 15, color: T.ghostDim, marginBottom: 36, lineHeight: 1.6 }}>We're onboarding LOs and Realtors in Honolulu first, then expanding nationwide. Join the waitlist and we'll reach out when it's your turn.</p>
         </FadeIn>
-
         <FadeIn delay={0.15}>
           {submitted ? (
             <div style={{ padding: "36px 28px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.tealBorder}` }}>
@@ -465,7 +509,6 @@ function Waitlist() {
                     </button>
                   ))}
                 </div>
-
                 <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
                   <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="First name" required style={{
                     flex: 1, padding: "14px 16px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: T.surface, color: T.white, fontSize: 15, fontFamily: T.font, outline: "none", boxSizing: "border-box",
@@ -474,20 +517,16 @@ function Waitlist() {
                     flex: 1, padding: "14px 16px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: T.surface, color: T.white, fontSize: 15, fontFamily: T.font, outline: "none", boxSizing: "border-box",
                   }} />
                 </div>
-
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Your email address" required style={{
                   width: "100%", padding: "14px 16px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: T.surface, color: T.white, fontSize: 15, fontFamily: T.font, outline: "none", boxSizing: "border-box", marginBottom: 12,
                 }} />
-
-                {error && <div style={{ fontSize: 12, color: T.coral, marginBottom: 12, padding: "8px 12px", borderRadius: 6, background: T.coralGlow }}>{error}</div>}
-
+                {error && <div style={{ fontSize: 12, color: T.coral, marginBottom: 12, padding: "8px 12px", borderRadius: 6, background: "rgba(255,107,107,0.10)" }}>{error}</div>}
                 <button type="submit" disabled={loading} style={{
                   width: "100%", padding: "14px 0", borderRadius: 8, border: "none", background: T.teal, color: T.navy, fontSize: 15, fontWeight: 600, cursor: loading ? "default" : "pointer", fontFamily: T.font,
                   boxShadow: `0 0 40px ${T.tealGlow}`,
                 }}>
                   {loading ? "Joining..." : "Join the waitlist"}
                 </button>
-
                 <p style={{ fontSize: 11, color: T.ghostDim, marginTop: 12 }}>No spam. No credit card. Just early access.</p>
               </form>
             </div>
@@ -515,11 +554,6 @@ function Footer() {
   );
 }
 
-
-// ═══════════════════════════════════════════════════════════════════
-// MAIN PAGE
-// ═══════════════════════════════════════════════════════════════════
-
 export default function LandingPage() {
   return (
     <div style={{ fontFamily: T.font, background: T.navy, color: T.white, minHeight: "100vh", overflowX: "hidden", position: "relative" }}>
@@ -531,16 +565,18 @@ export default function LandingPage() {
         ::placeholder { color: ${T.ghostDim}; }
         a:hover { opacity: 0.9; }
       `}</style>
-
       <Nav />
       <Hero />
       <PainPoints />
-      <HowItWorks />
+      <ConversionImpact />
+      <FullJourney />
+      <ConversationIntel />
       <ValueProps />
       <Pricing />
       <FounderSection />
       <Waitlist />
       <Footer />
+      <Analytics />
     </div>
   );
 }
