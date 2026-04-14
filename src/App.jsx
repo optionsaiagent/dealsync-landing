@@ -375,8 +375,8 @@ function FounderSection() {
         <FadeIn>
           <div style={{ padding: "40px 36px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}`, position: "relative" }}>
             <div style={{ position: "absolute", top: -1, left: 40, right: 40, height: 1, background: `linear-gradient(90deg, transparent, ${T.tealBorder}, transparent)` }} />
-            <div style={{ fontSize: 28, fontFamily: T.display, fontWeight: 300, fontStyle: "italic", color: T.ghost, lineHeight: 1.5, marginBottom: 24 }}>
-              "I built DealSync because I was tired of the same text every week from my Realtor partners: <span style={{ color: T.teal, fontWeight: 400 }}>What's the status on the Smith file?</span> Now they just check the app."
+            <div style={{ fontSize: 22, fontFamily: T.font, fontWeight: 400, color: T.ghost, lineHeight: 1.7, marginBottom: 24 }}>
+              "I built DealSync because the LO-Realtor relationship is the most important partnership in real estate — and my best Realtor partners and I kept solving the same problem on every file: <span style={{ color: T.teal, fontWeight: 500 }}>keeping each other in the loop.</span> After 25 years of originating in Honolulu, I figured if we need this, every LO-Realtor team does too."
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <div style={{ width: 48, height: 48, borderRadius: 10, background: `linear-gradient(135deg, ${T.navyMid}, ${T.slate})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 600, color: T.teal, border: `1px solid ${T.border}` }}>JM</div>
@@ -395,11 +395,12 @@ function FounderSection() {
 
 function Waitlist() {
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [role, setRole] = useState("lo");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-
-const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -415,7 +416,7 @@ const [error, setError] = useState(null);
             "apikey": "sb_publishable_XHDlAicw8iGxk5obabpNmw_Dt4layfq",
             "Prefer": "return=minimal",
           },
-          body: JSON.stringify({ email: email.toLowerCase(), role }),
+          body: JSON.stringify({ email: email.toLowerCase(), first_name: firstName, last_name: lastName, role }),
         }
       );
       if (res.status === 409 || res.status === 400) {
@@ -465,9 +466,20 @@ const [error, setError] = useState(null);
                   ))}
                 </div>
 
+                <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+                  <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="First name" required style={{
+                    flex: 1, padding: "14px 16px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: T.surface, color: T.white, fontSize: 15, fontFamily: T.font, outline: "none", boxSizing: "border-box",
+                  }} />
+                  <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} placeholder="Last name" required style={{
+                    flex: 1, padding: "14px 16px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: T.surface, color: T.white, fontSize: 15, fontFamily: T.font, outline: "none", boxSizing: "border-box",
+                  }} />
+                </div>
+
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Your email address" required style={{
                   width: "100%", padding: "14px 16px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: T.surface, color: T.white, fontSize: 15, fontFamily: T.font, outline: "none", boxSizing: "border-box", marginBottom: 12,
                 }} />
+
+                {error && <div style={{ fontSize: 12, color: T.coral, marginBottom: 12, padding: "8px 12px", borderRadius: 6, background: T.coralGlow }}>{error}</div>}
 
                 <button type="submit" disabled={loading} style={{
                   width: "100%", padding: "14px 0", borderRadius: 8, border: "none", background: T.teal, color: T.navy, fontSize: 15, fontWeight: 600, cursor: loading ? "default" : "pointer", fontFamily: T.font,
