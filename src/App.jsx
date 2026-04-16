@@ -146,9 +146,9 @@ function PainPoints() {
 
 function ConversionImpact() {
   const stats = [
-    { value: "80%", label: "of referred leads need follow-up beyond the first call", color: T.coral },
-    { value: "67%", label: "of buyers choose the first lender who follows up", color: T.teal },
-    { value: "5-12", label: "touchpoints needed to convert a referral into an application", color: T.amber },
+    { value: "80%", label: "of mortgage leads require nurturing before making a decision", source: "Mortgage Bankers Association", color: T.coral },
+    { value: "70%", label: "of homebuyers only interview one agent before deciding to work with them", source: "National Association of Realtors", color: T.teal },
+    { value: "5+", label: "follow-up contacts needed to close — yet 44% of agents stop after one", source: "National Sales Executive Association / Inman", color: T.amber },
   ];
 
   return (
@@ -164,7 +164,8 @@ function ConversionImpact() {
               {stats.map((s, i) => (
                 <div key={i} style={{ flex: 1, textAlign: "center", padding: "20px 16px", borderRadius: 10, background: T.surface, border: `1px solid ${T.border}` }}>
                   <div style={{ fontSize: 36, fontWeight: 700, fontFamily: T.display, color: s.color, marginBottom: 8 }}>{s.value}</div>
-                  <div style={{ fontSize: 12, color: T.ghostDim, lineHeight: 1.5 }}>{s.label}</div>
+                  <div style={{ fontSize: 12, color: T.ghostDim, lineHeight: 1.5, marginBottom: 6 }}>{s.label}</div>
+                  <div style={{ fontSize: 10, color: T.ghostDim, opacity: 0.6, fontStyle: "italic" }}>— {s.source}</div>
                 </div>
               ))}
             </div>
