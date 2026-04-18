@@ -58,7 +58,7 @@ function Nav() {
           <a href="#problem" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>The problem</a>
           <a href="#how-it-works" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>How it works</a>
           <a href="#pricing" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>Pricing</a>
-          <a href="#waitlist" style={{ padding: "9px 22px", borderRadius: 8, background: T.teal, color: T.navy, fontSize: 13, fontWeight: 600, textDecoration: "none", fontFamily: T.font }}>Get early access</a>
+          <a href="https://app.dealsync.me" style={{ padding: "9px 22px", borderRadius: 8, background: T.teal, color: T.navy, fontSize: 13, fontWeight: 600, textDecoration: "none", fontFamily: T.font }}>Get early access</a>
         </div>
       </div>
     </nav>
@@ -89,7 +89,7 @@ function Hero() {
         </FadeIn>
         <FadeIn delay={0.3}>
           <div style={{ display: "flex", justifyContent: "center", gap: 14 }}>
-            <a href="#waitlist" style={{ padding: "14px 36px", borderRadius: 10, background: T.teal, color: T.navy, fontSize: 15, fontWeight: 600, textDecoration: "none", fontFamily: T.font, boxShadow: `0 0 40px ${T.tealGlow}, 0 4px 16px rgba(0,0,0,0.3)` }}>
+            <a href="https://app.dealsync.me" style={{ padding: "14px 36px", borderRadius: 10, background: T.teal, color: T.navy, fontSize: 15, fontWeight: 600, textDecoration: "none", fontFamily: T.font, boxShadow: `0 0 40px ${T.tealGlow}, 0 4px 16px rgba(0,0,0,0.3)` }}>
               Get early access — free
             </a>
             <a href="#problem" style={{ padding: "14px 36px", borderRadius: 10, background: "transparent", border: `1px solid ${T.borderLight}`, color: T.ghost, fontSize: 15, fontWeight: 500, textDecoration: "none", fontFamily: T.font }}>
@@ -397,7 +397,7 @@ function Pricing() {
                     </div>
                   ))}
                 </div>
-                <a href="#waitlist" style={{ display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, textDecoration: "none", fontFamily: T.font, fontSize: 13, fontWeight: 600, background: tier.highlight ? T.teal : "transparent", color: tier.highlight ? T.navy : T.teal, border: tier.highlight ? "none" : `1px solid ${T.tealBorder}` }}>
+                <a href={tier.price === "Free" ? "#waitlist" : "https://app.dealsync.me"} style={{ display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, textDecoration: "none", fontFamily: T.font, fontSize: 13, fontWeight: 600, background: tier.highlight ? T.teal : "transparent", color: tier.highlight ? T.navy : T.teal, border: tier.highlight ? "none" : `1px solid ${T.tealBorder}` }}>
                   {tier.price === "Free" ? "Join when invited" : "Start free trial"}
                 </a>
               </div>
