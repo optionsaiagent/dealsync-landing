@@ -1,6 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { Analytics } from "@vercel/analytics/react";
 
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(typeof window !== "undefined" && window.innerWidth < breakpoint);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < breakpoint);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, [breakpoint]);
+  return isMobile;
+}
+
 const FONTS = `@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap');`;
 
 const T = {
@@ -41,6 +51,7 @@ function GlowOrb({ top, left, size = 400, color = T.teal, opacity = 0.04 }) {
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const m = useIsMobile();
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", h);
@@ -48,17 +59,19 @@ function Nav() {
   }, []);
 
   return (
-    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, padding: "16px 0", transition: "all 0.3s", background: scrolled ? "rgba(11,29,46,0.92)" : "transparent", backdropFilter: scrolled ? "blur(12px)" : "none", borderBottom: scrolled ? `1px solid ${T.border}` : "1px solid transparent" }}>
-      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, padding: m ? "12px 0" : "16px 0", transition: "all 0.3s", background: scrolled ? "rgba(11,29,46,0.92)" : "transparent", backdropFilter: scrolled ? "blur(12px)" : "none", borderBottom: scrolled ? `1px solid ${T.border}` : "1px solid transparent" }}>
+      <div style={{ maxWidth: 1120, margin: "0 auto", padding: m ? "0 16px" : "0 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 2 }}>
-          <span style={{ fontSize: 22, fontWeight: 600, fontFamily: T.display, color: T.teal }}>Deal</span>
-          <span style={{ fontSize: 22, fontWeight: 300, color: T.white }}>Sync</span>
+          <span style={{ fontSize: m ? 18 : 22, fontWeight: 600, fontFamily: T.display, color: T.teal }}>Deal</span>
+          <span style={{ fontSize: m ? 18 : 22, fontWeight: 300, color: T.white }}>Sync</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          <a href="#problem" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>The problem</a>
-          <a href="#how-it-works" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>How it works</a>
-          <a href="#pricing" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>Pricing</a>
-          <a href="https://app.dealsync.me" style={{ padding: "9px 22px", borderRadius: 8, background: T.teal, color: T.navy, fontSize: 13, fontWeight: 600, textDecoration: "none", fontFamily: T.font }}>Get early access</a>
+        <div style={{ display: "flex", alignItems: "center", gap: m ? 12 : 28 }}>
+          {!m && <>
+            <a href="#problem" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>The problem</a>
+            <a href="#how-it-works" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>How it works</a>
+            <a href="#pricing" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>Pricing</a>
+          </>}
+          <a href="https://app.dealsync.me" style={{ padding: m ? "7px 16px" : "9px 22px", borderRadius: 8, background: T.teal, color: T.navy, fontSize: m ? 12 : 13, fontWeight: 600, textDecoration: "none", fontFamily: T.font }}>Get early access</a>
         </div>
       </div>
     </nav>
@@ -66,33 +79,34 @@ function Nav() {
 }
 
 function Hero() {
+  const m = useIsMobile();
   return (
-    <section style={{ position: "relative", overflow: "hidden", padding: "160px 32px 100px", textAlign: "center" }}>
-      <GlowOrb top="-200px" left="10%" size={600} color={T.teal} opacity={0.05} />
-      <GlowOrb top="100px" left="70%" size={500} color={T.sky} opacity={0.03} />
+    <section style={{ position: "relative", overflow: "hidden", padding: m ? "120px 20px 60px" : "160px 32px 100px", textAlign: "center" }}>
+      <GlowOrb top="-200px" left="10%" size={m ? 300 : 600} color={T.teal} opacity={0.05} />
+      <GlowOrb top="100px" left="70%" size={m ? 250 : 500} color={T.sky} opacity={0.03} />
       <div style={{ position: "relative", maxWidth: 820, margin: "0 auto" }}>
         <FadeIn>
-          <div style={{ display: "inline-block", padding: "6px 16px", borderRadius: 20, background: T.surface, border: `1px solid ${T.tealBorder}`, marginBottom: 28 }}>
-            <span style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 0.5 }}>Built by a 25-year LO for LOs and Realtors</span>
+          <div style={{ display: "inline-block", padding: "6px 16px", borderRadius: 20, background: T.surface, border: `1px solid ${T.tealBorder}`, marginBottom: m ? 20 : 28 }}>
+            <span style={{ fontSize: m ? 11 : 12, color: T.teal, fontWeight: 500, letterSpacing: 0.5 }}>Built by a 25-year LO for LOs and Realtors</span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <h1 style={{ fontSize: 54, fontWeight: 700, fontFamily: T.display, color: T.white, lineHeight: 1.1, marginBottom: 20, letterSpacing: -1 }}>
-            Every referral deserves<br />
+          <h1 style={{ fontSize: m ? 32 : 54, fontWeight: 700, fontFamily: T.display, color: T.white, lineHeight: 1.1, marginBottom: m ? 16 : 20, letterSpacing: -1 }}>
+            Every referral deserves{m ? " " : <br />}
             <span style={{ fontStyle: "italic", fontWeight: 400, color: T.teal }}>a deal room, not a dead end</span>
           </h1>
         </FadeIn>
         <FadeIn delay={0.2}>
-          <p style={{ fontSize: 19, color: T.ghost, lineHeight: 1.65, maxWidth: 620, margin: "0 auto 36px", fontWeight: 300 }}>
+          <p style={{ fontSize: m ? 15 : 19, color: T.ghost, lineHeight: 1.65, maxWidth: 620, margin: "0 auto 36px", fontWeight: 300 }}>
             DealSync is the shared deal room where Loan Officers and Realtors track every lead from first conversation to closing day. No more forgotten follow-ups. No more lost referrals. Just one place where both sides see everything.
           </p>
         </FadeIn>
         <FadeIn delay={0.3}>
-          <div style={{ display: "flex", justifyContent: "center", gap: 14 }}>
-            <a href="https://app.dealsync.me" style={{ padding: "14px 36px", borderRadius: 10, background: T.teal, color: T.navy, fontSize: 15, fontWeight: 600, textDecoration: "none", fontFamily: T.font, boxShadow: `0 0 40px ${T.tealGlow}, 0 4px 16px rgba(0,0,0,0.3)` }}>
+          <div style={{ display: "flex", justifyContent: "center", gap: m ? 10 : 14, flexDirection: m ? "column" : "row", alignItems: "center" }}>
+            <a href="https://app.dealsync.me" style={{ padding: m ? "12px 28px" : "14px 36px", borderRadius: 10, background: T.teal, color: T.navy, fontSize: m ? 14 : 15, fontWeight: 600, textDecoration: "none", fontFamily: T.font, boxShadow: `0 0 40px ${T.tealGlow}, 0 4px 16px rgba(0,0,0,0.3)`, width: m ? "100%" : "auto", textAlign: "center" }}>
               Get early access — free
             </a>
-            <a href="#problem" style={{ padding: "14px 36px", borderRadius: 10, background: "transparent", border: `1px solid ${T.borderLight}`, color: T.ghost, fontSize: 15, fontWeight: 500, textDecoration: "none", fontFamily: T.font }}>
+            <a href="#problem" style={{ padding: m ? "12px 28px" : "14px 36px", borderRadius: 10, background: "transparent", border: `1px solid ${T.borderLight}`, color: T.ghost, fontSize: m ? 14 : 15, fontWeight: 500, textDecoration: "none", fontFamily: T.font, width: m ? "100%" : "auto", textAlign: "center" }}>
               See how it works
             </a>
           </div>
@@ -106,6 +120,7 @@ function Hero() {
 }
 
 function PainPoints() {
+  const m = useIsMobile();
   const pains = [
     { icon: "?", color: T.coral, title: "The referral black hole", desc: "A Realtor refers a buyer to an LO. They have a great phone call. But the buyer isn't ready to apply yet. Three weeks later, nobody remembers what was discussed — and the lead goes cold." },
     { icon: "↻", color: T.amber, title: "Follow-ups fall through the cracks", desc: "That buyer who said 'call me in 60 days'? Without a shared system, it's a sticky note on a monitor. By the time someone follows up, the buyer already talked to another lender." },
@@ -114,21 +129,21 @@ function PainPoints() {
   ];
 
   return (
-    <section id="problem" style={{ padding: "80px 32px", position: "relative" }}>
+    <section id="problem" style={{ padding: m ? "60px 20px" : "80px 32px", position: "relative" }}>
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <FadeIn>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <div style={{ textAlign: "center", marginBottom: m ? 36 : 56 }}>
             <p style={{ fontSize: 12, color: T.coral, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>The problem</p>
-            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.2 }}>
-              You're not losing deals at closing.<br />
+            <h2 style={{ fontSize: m ? 26 : 36, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.2 }}>
+              You're not losing deals at closing.{m ? " " : <br />}
               <span style={{ color: T.ghost, fontWeight: 400 }}>You're losing them at "I'm not ready yet."</span>
             </h2>
-            <p style={{ fontSize: 15, color: T.ghostDim, marginTop: 16, maxWidth: 640, margin: "16px auto 0", lineHeight: 1.6 }}>
+            <p style={{ fontSize: m ? 14 : 15, color: T.ghostDim, marginTop: 16, maxWidth: 640, margin: "16px auto 0", lineHeight: 1.6 }}>
               Most LO-Realtor tools focus on the escrow phase. But the biggest leakage in your pipeline happens before a buyer ever fills out an application — in the weeks and months between first contact and "I'm ready to move forward."
             </p>
           </div>
         </FadeIn>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: m ? "1fr" : "repeat(2, 1fr)", gap: 16 }}>
           {pains.map((p, i) => (
             <FadeIn key={i} delay={i * 0.1}>
               <div style={{ padding: "28px 24px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.border}`, height: "100%" }}>
@@ -145,6 +160,7 @@ function PainPoints() {
 }
 
 function ConversionImpact() {
+  const m = useIsMobile();
   const stats = [
     { value: "80%", label: "of mortgage leads require nurturing before making a decision", source: "Mortgage Bankers Association", color: T.coral },
     { value: "70%", label: "of homebuyers only interview one agent before deciding to work with them", source: "National Association of Realtors", color: T.teal },
@@ -152,15 +168,15 @@ function ConversionImpact() {
   ];
 
   return (
-    <section style={{ padding: "60px 32px" }}>
+    <section style={{ padding: m ? "40px 20px" : "60px 32px" }}>
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
         <FadeIn>
-          <div style={{ padding: "36px 40px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}` }}>
-            <div style={{ textAlign: "center", marginBottom: 32 }}>
-              <h2 style={{ fontSize: 26, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 8 }}>The follow-up gap is where deals die</h2>
-              <p style={{ fontSize: 14, color: T.ghostDim, lineHeight: 1.6 }}>When LOs and Realtors don't have shared visibility, leads slip through the cracks between "interested" and "ready."</p>
+          <div style={{ padding: m ? "24px 20px" : "36px 40px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}` }}>
+            <div style={{ textAlign: "center", marginBottom: m ? 20 : 32 }}>
+              <h2 style={{ fontSize: m ? 20 : 26, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 8 }}>The follow-up gap is where deals die</h2>
+              <p style={{ fontSize: m ? 13 : 14, color: T.ghostDim, lineHeight: 1.6 }}>When LOs and Realtors don't have shared visibility, leads slip through the cracks between "interested" and "ready."</p>
             </div>
-            <div style={{ display: "flex", gap: 24 }}>
+            <div style={{ display: "flex", gap: m ? 12 : 24, flexDirection: m ? "column" : "row" }}>
               {stats.map((s, i) => (
                 <div key={i} style={{ flex: 1, textAlign: "center", padding: "20px 16px", borderRadius: 10, background: T.surface, border: `1px solid ${T.border}` }}>
                   <div style={{ fontSize: 36, fontWeight: 700, fontFamily: T.display, color: s.color, marginBottom: 8 }}>{s.value}</div>
@@ -177,6 +193,7 @@ function ConversionImpact() {
 }
 
 function FullJourney() {
+  const m = useIsMobile();
   const stages = [
     { num: "01", label: "Referral", color: T.sky, title: "The lead comes in", desc: "A Realtor refers a buyer. An LO gets a call from a prospect. Instead of scribbling on a notepad or entering it into a CRM the other side can't see — both parties create a shared deal card in seconds.", mockItems: [
       { text: "Lead source: Agent referral — Will Campbell", color: T.sky },
@@ -205,41 +222,41 @@ function FullJourney() {
   ];
 
   return (
-    <section id="how-it-works" style={{ padding: "100px 32px", position: "relative" }}>
-      <GlowOrb top="0" left="-10%" size={500} color={T.teal} opacity={0.03} />
+    <section id="how-it-works" style={{ padding: m ? "60px 20px" : "100px 32px", position: "relative" }}>
+      <GlowOrb top="0" left="-10%" size={m ? 250 : 500} color={T.teal} opacity={0.03} />
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <FadeIn>
-          <div style={{ textAlign: "center", marginBottom: 64 }}>
+          <div style={{ textAlign: "center", marginBottom: m ? 36 : 64 }}>
             <p style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>The full journey</p>
-            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.2 }}>From first conversation<br />to closing day</h2>
-            <p style={{ fontSize: 15, color: T.ghostDim, maxWidth: 560, margin: "16px auto 0", lineHeight: 1.6 }}>DealSync doesn't start at escrow. It starts the moment a lead enters your world — and stays with them until they get their keys.</p>
+            <h2 style={{ fontSize: m ? 26 : 36, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.2 }}>From first conversation{m ? " " : <br />}to closing day</h2>
+            <p style={{ fontSize: m ? 14 : 15, color: T.ghostDim, maxWidth: 560, margin: "16px auto 0", lineHeight: 1.6 }}>DealSync doesn't start at escrow. It starts the moment a lead enters your world — and stays with them until they get their keys.</p>
           </div>
         </FadeIn>
-        <div style={{ display: "flex", justifyContent: "center", gap: 4, marginBottom: 56 }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 4, marginBottom: m ? 32 : 56, flexWrap: m ? "wrap" : "nowrap" }}>
           {stages.map((s, i) => (
             <FadeIn key={i} delay={i * 0.08}>
               <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                <div style={{ padding: "8px 20px", borderRadius: 20, background: `${s.color}15`, border: `1px solid ${s.color}30`, display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 11, fontWeight: 600, color: s.color }}>{s.num}</span>
-                  <span style={{ fontSize: 12, fontWeight: 500, color: s.color }}>{s.label}</span>
+                <div style={{ padding: m ? "6px 14px" : "8px 20px", borderRadius: 20, background: `${s.color}15`, border: `1px solid ${s.color}30`, display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: m ? 10 : 11, fontWeight: 600, color: s.color }}>{s.num}</span>
+                  <span style={{ fontSize: m ? 11 : 12, fontWeight: 500, color: s.color }}>{s.label}</span>
                 </div>
-                {i < stages.length - 1 && <div style={{ width: 24, height: 1, background: T.border }} />}
+                {i < stages.length - 1 && !m && <div style={{ width: 24, height: 1, background: T.border }} />}
               </div>
             </FadeIn>
           ))}
         </div>
         {stages.map((stage, i) => (
           <FadeIn key={i} delay={0.1}>
-            <div style={{ display: "flex", gap: 48, alignItems: "flex-start", marginBottom: 56, flexDirection: i % 2 === 1 ? "row-reverse" : "row" }}>
-              <div style={{ flex: 1, paddingTop: 12 }}>
+            <div style={{ display: "flex", gap: m ? 20 : 48, alignItems: "flex-start", marginBottom: m ? 36 : 56, flexDirection: m ? "column" : (i % 2 === 1 ? "row-reverse" : "row") }}>
+              <div style={{ flex: 1, paddingTop: m ? 0 : 12 }}>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "4px 14px", borderRadius: 16, background: `${stage.color}12`, border: `1px solid ${stage.color}25`, marginBottom: 14 }}>
                   <span style={{ fontSize: 11, fontWeight: 600, color: stage.color }}>{stage.num}</span>
                   <span style={{ fontSize: 12, fontWeight: 500, color: stage.color }}>{stage.label}</span>
                 </div>
-                <h3 style={{ fontSize: 24, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>{stage.title}</h3>
-                <p style={{ fontSize: 15, color: T.ghostDim, lineHeight: 1.7 }}>{stage.desc}</p>
+                <h3 style={{ fontSize: m ? 20 : 24, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>{stage.title}</h3>
+                <p style={{ fontSize: m ? 14 : 15, color: T.ghostDim, lineHeight: 1.7 }}>{stage.desc}</p>
               </div>
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, width: m ? "100%" : "auto" }}>
                 <div style={{ borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}`, overflow: "hidden" }}>
                   <div style={{ padding: "14px 18px", borderBottom: `1px solid ${T.border}`, background: `linear-gradient(135deg, ${T.navyMid}, ${T.navyLight})` }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -269,12 +286,13 @@ function FullJourney() {
 }
 
 function ConversationIntel() {
+  const m = useIsMobile();
   return (
-    <section style={{ padding: "80px 32px", position: "relative" }}>
-      <GlowOrb top="-50px" left="60%" size={400} color={T.amber} opacity={0.03} />
+    <section style={{ padding: m ? "60px 20px" : "80px 32px", position: "relative" }}>
+      <GlowOrb top="-50px" left="60%" size={m ? 200 : 400} color={T.amber} opacity={0.03} />
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
         <FadeIn>
-          <div style={{ display: "flex", gap: 40, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: m ? 24 : 40, alignItems: "center", flexDirection: m ? "column" : "row" }}>
             <div style={{ flex: 1 }}>
               <div style={{ display: "inline-block", padding: "4px 14px", borderRadius: 16, background: `${T.amber}12`, border: `1px solid ${T.amber}25`, marginBottom: 14 }}>
                 <span style={{ fontSize: 12, fontWeight: 500, color: T.amber }}>Coming soon</span>
@@ -326,6 +344,7 @@ function ConversationIntel() {
 }
 
 function ValueProps() {
+  const m = useIsMobile();
   const props = [
     { icon: "⊕", color: T.teal, title: "Shared from day one", desc: "The moment a lead enters the system, both the LO and Realtor can see it. No waiting until escrow to start collaborating." },
     { icon: "✎", color: T.amber, title: "Conversation notes that stick", desc: "Every phone call, every meeting, every discussion — captured on the deal card where both partners can reference it weeks or months later." },
@@ -336,16 +355,16 @@ function ValueProps() {
   ];
 
   return (
-    <section style={{ padding: "80px 32px", position: "relative" }}>
+    <section style={{ padding: m ? "60px 20px" : "80px 32px", position: "relative" }}>
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <FadeIn>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <div style={{ textAlign: "center", marginBottom: m ? 36 : 56 }}>
             <p style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>Why DealSync</p>
-            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white }}>Not a CRM replacement.<br />The layer between them.</h2>
-            <p style={{ fontSize: 15, color: T.ghostDim, maxWidth: 560, margin: "12px auto 0", lineHeight: 1.6 }}>Your LO has a CRM. Your Realtor has a CRM. What's missing is the shared space between them — from first referral to closing day.</p>
+            <h2 style={{ fontSize: m ? 26 : 36, fontWeight: 600, fontFamily: T.display, color: T.white }}>Not a CRM replacement.{m ? " " : <br />}The layer between them.</h2>
+            <p style={{ fontSize: m ? 14 : 15, color: T.ghostDim, maxWidth: 560, margin: "12px auto 0", lineHeight: 1.6 }}>Your LO has a CRM. Your Realtor has a CRM. What's missing is the shared space between them — from first referral to closing day.</p>
           </div>
         </FadeIn>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: m ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
           {props.map((p, i) => (
             <FadeIn key={i} delay={i * 0.08}>
               <div style={{ padding: "28px 24px", borderRadius: 12, background: T.surface, border: `1px solid ${T.border}` }}>
@@ -362,6 +381,7 @@ function ValueProps() {
 }
 
 function Pricing() {
+  const m = useIsMobile();
   const tiers = [
     { name: "Realtor Partner", price: "Free", period: "forever", color: T.amber, highlight: false, desc: "For Real Estate Agents invited by their LO partners.", features: ["Unlimited shared deals", "Real-time loan status updates", "Activity feed and notifications", "Conversation notes and history", "Mobile app access"] },
     { name: "Solo LO", price: "$49", period: "/month", color: T.teal, highlight: true, desc: "For independent originators who want to convert more referrals into closings.", features: ["Everything in Free", "Unlimited partner invites", "Unlimited active deals", "Partner scorecard and analytics", "Lead nurture tracking", "Priority support", "14-day free trial"] },
@@ -369,17 +389,17 @@ function Pricing() {
   ];
 
   return (
-    <section id="pricing" style={{ padding: "100px 32px", position: "relative" }}>
-      <GlowOrb top="-100px" left="50%" size={600} color={T.teal} opacity={0.03} />
+    <section id="pricing" style={{ padding: m ? "60px 20px" : "100px 32px", position: "relative" }}>
+      <GlowOrb top="-100px" left="50%" size={m ? 300 : 600} color={T.teal} opacity={0.03} />
       <div style={{ maxWidth: 1020, margin: "0 auto" }}>
         <FadeIn>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <div style={{ textAlign: "center", marginBottom: m ? 36 : 56 }}>
             <p style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>Pricing</p>
-            <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>Less than the cost of<br />one lost referral</h2>
+            <h2 style={{ fontSize: m ? 26 : 36, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>Less than the cost of{m ? " " : <br />}one lost referral</h2>
             <p style={{ fontSize: 15, color: T.ghostDim }}>LOs pay. Realtors are always free.</p>
           </div>
         </FadeIn>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: m ? "1fr" : "repeat(3, 1fr)", gap: 16, alignItems: "start" }}>
           {tiers.map((tier, i) => (
             <FadeIn key={i} delay={i * 0.1}>
               <div style={{ padding: "32px 28px", borderRadius: 14, background: tier.highlight ? `linear-gradient(160deg, ${T.navyMid}, ${T.navyLight})` : T.navyLight, border: `1px solid ${tier.highlight ? T.tealBorder : T.border}`, position: "relative", overflow: "hidden" }}>
@@ -415,13 +435,14 @@ function Pricing() {
 }
 
 function FounderSection() {
+  const m = useIsMobile();
   return (
-    <section style={{ padding: "80px 32px" }}>
+    <section style={{ padding: m ? "60px 20px" : "80px 32px" }}>
       <div style={{ maxWidth: 720, margin: "0 auto" }}>
         <FadeIn>
-          <div style={{ padding: "40px 36px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}`, position: "relative" }}>
+          <div style={{ padding: m ? "28px 20px" : "40px 36px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}`, position: "relative" }}>
             <div style={{ position: "absolute", top: -1, left: 40, right: 40, height: 1, background: `linear-gradient(90deg, transparent, ${T.tealBorder}, transparent)` }} />
-            <div style={{ fontSize: 22, fontFamily: T.font, fontWeight: 400, color: T.ghost, lineHeight: 1.7, marginBottom: 24 }}>
+            <div style={{ fontSize: m ? 16 : 22, fontFamily: T.font, fontWeight: 400, color: T.ghost, lineHeight: 1.7, marginBottom: 24 }}>
               "I built DealSync because the LO-Realtor relationship is the most important partnership in real estate — and my best Realtor partners and I kept solving the same problem on every file: <span style={{ color: T.teal, fontWeight: 500 }}>keeping each other in the loop.</span> After 25 years of originating in Honolulu, I figured if we need this, every LO-Realtor team does too."
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
@@ -440,6 +461,7 @@ function FounderSection() {
 }
 
 function Waitlist() {
+  const m = useIsMobile();
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -480,12 +502,12 @@ function Waitlist() {
   };
 
   return (
-    <section id="waitlist" style={{ padding: "100px 32px", position: "relative" }}>
-      <GlowOrb top="-100px" left="30%" size={500} color={T.teal} opacity={0.04} />
+    <section id="waitlist" style={{ padding: m ? "60px 20px" : "100px 32px", position: "relative" }}>
+      <GlowOrb top="-100px" left="30%" size={m ? 250 : 500} color={T.teal} opacity={0.04} />
       <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
         <FadeIn>
           <p style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>Early access</p>
-          <h2 style={{ fontSize: 36, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>Be first in the deal room</h2>
+          <h2 style={{ fontSize: m ? 26 : 36, fontWeight: 600, fontFamily: T.display, color: T.white, marginBottom: 12 }}>Be first in the deal room</h2>
           <p style={{ fontSize: 15, color: T.ghostDim, marginBottom: 36, lineHeight: 1.6 }}>We're onboarding LOs and Realtors in Honolulu first, then expanding nationwide. Join the waitlist and we'll reach out when it's your turn.</p>
         </FadeIn>
         <FadeIn delay={0.15}>
@@ -539,13 +561,14 @@ function Waitlist() {
 }
 
 function Footer() {
+  const m = useIsMobile();
   return (
-    <footer style={{ padding: "40px 32px", borderTop: `1px solid ${T.border}` }}>
-      <div style={{ maxWidth: 1120, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <footer style={{ padding: m ? "30px 20px" : "40px 32px", borderTop: `1px solid ${T.border}` }}>
+      <div style={{ maxWidth: 1120, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: m ? "column" : "row", gap: m ? 8 : 0 }}>
         <div>
           <span style={{ fontSize: 16, fontWeight: 600, fontFamily: T.display, color: T.teal }}>Deal</span>
           <span style={{ fontSize: 16, fontWeight: 300, color: T.ghost }}>Sync</span>
-          <span style={{ fontSize: 12, color: T.ghostDim, marginLeft: 16 }}>The collaborative deal room for LOs and Realtors</span>
+          {!m && <span style={{ fontSize: 12, color: T.ghostDim, marginLeft: 16 }}>The collaborative deal room for LOs and Realtors</span>}
         </div>
         <div style={{ fontSize: 12, color: T.ghostDim }}>
           © 2026 DealSync.me · Built in Honolulu, HI
@@ -565,6 +588,9 @@ export default function LandingPage() {
         html { scroll-behavior: smooth; }
         ::placeholder { color: ${T.ghostDim}; }
         a:hover { opacity: 0.9; }
+        @media (max-width: 768px) {
+          input, select, textarea { font-size: 16px !important; }
+        }
       `}</style>
       <Nav />
       <Hero />
