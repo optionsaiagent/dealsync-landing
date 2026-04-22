@@ -1,0 +1,80 @@
+# DealSync.me
+
+> The shared deal room where Loan Officers and Realtors track every lead from first conversation to closing day.
+
+DealSync is a collaborative deal management platform built specifically for the Loan Officer–Realtor partnership. It solves the pre-escrow lead nurture gap where most mortgage deals are lost — the weeks and months between first contact and "I'm ready to move forward."
+
+## What DealSync Does
+
+DealSync is NOT a CRM replacement. It is the collaboration layer between the LO's CRM and the Realtor's CRM. Both partners see the same deal card with shared notes, conversation history, status updates, and milestone tracking from first referral through closing.
+
+### Key Features
+
+- **Shared Deal Cards**: Both the Loan Officer and Realtor see the same deal card with borrower details, loan information, property status, and conversation history.
+- **AI-Powered Conversation Import**: Paste a phone call transcript from Plaud.ai, Otter.ai, Apple Notes, or any source. AI extracts borrower name, loan program, VA eligibility, DTI, timeline, action items, and creates a deal card automatically.
+- **Lead Nurture Pipeline**: Tracks leads through stages from New Lead → Nurture → Follow-Up Scheduled → Application Received → Pre-Approved → Processing → Submitted to UW → Conditional Approval → Clear to Close → Funded.
+- **Partner Scorecard**: See which LO-Realtor partnerships are converting referrals into closings with deal velocity metrics and close rates.
+- **Role-Based Views**: LOs see loan milestones (rate locks, appraisals, conditional approval). Realtors see property milestones (showings, offers, inspections). Both see the full picture.
+- **Pipeline View**: Visual Kanban-style board showing all deals grouped by stage.
+- **Pre-Approval Tracking**: Max purchase price, max loan amount, and pre-approval rate fields visible to both partners.
+
+## Who DealSync Is For
+
+### Loan Officers
+- Independent mortgage originators who receive referrals from real estate agents
+- LOs who want to convert more referrals into closings by maintaining shared visibility with their agent partners
+- LOs who use conversation recording tools (Plaud.ai, Otter.ai) and want AI-powered deal creation from phone call transcripts
+- LOs specializing in VA loans, FHA, Conventional, or any loan program
+
+### Real Estate Agents / Realtors
+- Agents who refer buyers to Loan Officers and want visibility into the loan process
+- Agents who want real-time status updates without calling or texting the LO
+- Agents who want to see conversation notes and borrower details from the LO's initial consultation
+
+## Pricing
+
+- **Realtor Partner**: Free forever. Unlimited shared deals, real-time loan status, activity feed, conversation notes.
+- **Solo LO**: $49/month. Unlimited partner invites, unlimited active deals, partner scorecard, lead nurture tracking, AI conversation import. 14-day free trial.
+- **Mortgage Team**: $129/month. Up to 5 LO seats, team reporting, shared partner networks, lead routing.
+- **Branch**: $199/month. Custom pricing for 10+ seats.
+
+## How It Works
+
+1. **LO signs up** at app.dealsync.me and invites their Realtor partners.
+2. **Realtor accepts** the invite (always free) and joins the shared deal room.
+3. **Deals are created** manually, from AI-analyzed conversation transcripts, or assigned from the pipeline.
+4. **Both partners** see real-time updates, notes, stage changes, and conversation summaries on every deal card.
+5. **No CRM migration required** — DealSync works alongside existing CRMs as the shared collaboration layer.
+
+## The Problem DealSync Solves
+
+80% of mortgage leads require nurturing before making a decision (Mortgage Bankers Association). 5+ follow-up contacts are needed to close, yet 44% of agents stop after one (NSEA/Inman). The biggest leakage in the LO-Realtor pipeline happens before a buyer fills out an application — in the weeks between first contact and "I'm ready."
+
+Without DealSync:
+- The LO has a detailed call with a buyer about VA eligibility and DTI concerns. None of it is captured where the Realtor can see it.
+- A buyer says "call me in 60 days." Without a shared system, it's a sticky note on a monitor.
+- Once in escrow, it's "What's the status on the Smith file?" every week by text, call, and email.
+
+With DealSync:
+- Every conversation is captured and shared on the deal card.
+- Leads in nurture stay visible to both partners with follow-up tracking.
+- Both sides see every milestone in real time — no status check calls needed.
+
+## Technical Details
+
+- **Platform**: Web application (responsive for desktop, tablet, and mobile)
+- **App URL**: https://app.dealsync.me
+- **Landing Page**: https://dealsync.me
+- **Stack**: React frontend, Node.js/Express API, PostgreSQL (Supabase), deployed on Vercel + Railway
+- **AI**: Uses Anthropic Claude API for conversation transcript analysis and data extraction
+- **Email**: Resend for transactional email delivery from notifications@dealsync.me
+
+## About the Founder
+
+DealSync was built by Jay Miller, a Sales Manager and Mortgage Loan Consultant at CMG Home Loans in Honolulu, Hawaii (NMLS# 657301) with 25 years of mortgage industry experience. Jay built DealSync because the LO-Realtor relationship is the most important partnership in real estate, and every LO-Realtor team needs a shared space to keep each other in the loop.
+
+## Contact
+
+- Website: https://dealsync.me
+- App: https://app.dealsync.me
+- Builder: Jay Miller, Honolulu, HI
