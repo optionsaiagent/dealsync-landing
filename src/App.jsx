@@ -384,7 +384,7 @@ function Pricing() {
   const m = useIsMobile();
   const tiers = [
     { name: "Realtor Partner", price: "Free", period: "forever", color: T.amber, highlight: false, desc: "For Real Estate Agents invited by their LO partners.", features: ["Unlimited shared deals", "Real-time loan status updates", "Activity feed and notifications", "Conversation notes and history", "Mobile app access"] },
-    { name: "Solo LO", price: "$49", period: "/month", color: T.teal, highlight: true, desc: "For independent originators who want to convert more referrals into closings.", features: ["Everything in Free", "Unlimited partner invites", "Unlimited active deals", "Partner scorecard and analytics", "Lead nurture tracking", "Priority support", "14-day free trial"] },
+    { name: "Solo LO", price: "$49", period: "/month", color: T.teal, highlight: true, desc: "For independent originators who want to convert more referrals into closings.", features: ["Everything in Free", "Unlimited partner invites", "Unlimited active deals", "Partner scorecard and analytics", "Lead nurture tracking", "Priority support", "30-day free trial"] },
     { name: "Mortgage Team", price: "$129", period: "/month", color: T.sky, highlight: false, desc: "For small LO teams who share referral networks.", features: ["Everything in Solo", "Up to 5 LO seats", "Team-level reporting", "Shared partner networks", "Lead routing between LOs"] },
   ];
 
