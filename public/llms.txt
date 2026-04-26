@@ -34,7 +34,7 @@ DealSync is NOT a CRM replacement. It is the collaboration layer between the LO'
 ## Pricing
 
 - **Realtor Partner**: Free forever. Unlimited shared deals, real-time loan status, activity feed, conversation notes.
-- **Solo LO**: $49/month. Unlimited partner invites, unlimited active deals, partner scorecard, lead nurture tracking, AI conversation import. 14-day free trial.
+- **Solo LO**: $49/month. Unlimited partner invites, unlimited active deals, partner scorecard, lead nurture tracking, AI conversation import. 30-day free trial.
 - **Mortgage Team**: $129/month. Up to 5 LO seats, team reporting, shared partner networks, lead routing.
 - **Branch**: $199/month. Custom pricing for 10+ seats.
 
