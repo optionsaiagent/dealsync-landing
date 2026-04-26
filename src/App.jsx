@@ -571,7 +571,7 @@ function Footer() {
           {!m && <span style={{ fontSize: 12, color: T.ghostDim, marginLeft: 16 }}>The collaborative deal room for LOs and Realtors</span>}
         </div>
         <div style={{ fontSize: 12, color: T.ghostDim }}>
-          © 2026 DealSync.me · Built in Honolulu, HI
+         © 2026 DealSync.me · Built in Honolulu, HI · <a href="mailto:support@dealsync.me" style={{ color: T.teal, textDecoration: "none" }}>support@dealsync.me</a>
         </div>
       </div>
     </footer>
