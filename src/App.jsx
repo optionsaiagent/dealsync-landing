@@ -453,7 +453,7 @@ function Pricing() {
         </div>
         <FadeIn delay={0.3}>
           <div style={{ textAlign: "center", marginTop: 32 }}>
-            <p style={{ fontSize: 13, color: T.ghostDim }}>Need 10+ seats? <span onClick={() => setShowBranchForm(true)} style={{ color: T.teal, cursor: "pointer", textDecoration: "underline" }}>Contact us for Branch pricing</span></p>
+            <p style={{ fontSize: 13, color: T.ghostDim }}>Need 5+ seats? <span onClick={() => setShowBranchForm(true)} style={{ color: T.teal, cursor: "pointer", textDecoration: "underline" }}>Contact us for Branch pricing</span></p>
           </div>
         </FadeIn>
 
