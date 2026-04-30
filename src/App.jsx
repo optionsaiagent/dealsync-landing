@@ -382,6 +382,34 @@ function ValueProps() {
 
 function Pricing() {
   const m = useIsMobile();
+  const [showBranchForm, setShowBranchForm] = useState(false);
+  const [branchForm, setBranchForm] = useState({ name: "", email: "", phone: "", company: "", lo_count: "", notes: "" });
+  const [branchSubmitting, setBranchSubmitting] = useState(false);
+  const [branchSuccess, setBranchSuccess] = useState(false);
+  const [branchError, setBranchError] = useState(null);
+
+  const handleBranchSubmit = async (e) => {
+    e.preventDefault();
+    if (!branchForm.name || !branchForm.email) { setBranchError("Name and email are required"); return; }
+    setBranchSubmitting(true);
+    setBranchError(null);
+    try {
+      const API = process.env.REACT_APP_API_URL || "https://dealsync-api-production.up.railway.app";
+      const res = await fetch(`${API}/api/auth/branch-inquiry`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(branchForm),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to submit");
+      setBranchSuccess(true);
+    } catch (err) {
+      setBranchError(err.message);
+    } finally {
+      setBranchSubmitting(false);
+    }
+  };
+
   const tiers = [
     { name: "Realtor Partner", price: "Free", period: "forever", color: T.amber, highlight: false, desc: "For Real Estate Agents invited by their LO partners.", features: ["Unlimited shared deals", "Real-time loan status updates", "Activity feed and notifications", "Conversation notes and history", "Mobile app access"] },
     { name: "Solo LO", price: "$49", period: "/month", color: T.teal, highlight: true, desc: "For independent originators who want to convert more referrals into closings.", features: ["Everything in Free", "Unlimited partner invites", "Unlimited active deals", "Partner scorecard and analytics", "Lead nurture tracking", "Priority support", "30-day free trial"] },
@@ -426,9 +454,74 @@ function Pricing() {
         </div>
         <FadeIn delay={0.3}>
           <div style={{ textAlign: "center", marginTop: 32 }}>
-            <p style={{ fontSize: 13, color: T.ghostDim }}>Need 10+ seats? <span style={{ color: T.teal, cursor: "pointer" }}>Contact us for Branch pricing</span></p>
+            <p style={{ fontSize: 13, color: T.ghostDim }}>Need 10+ seats? <span onClick={() => setShowBranchForm(true)} style={{ color: T.teal, cursor: "pointer", textDecoration: "underline" }}>Contact us for Branch pricing</span></p>
           </div>
         </FadeIn>
+
+        {/* Branch Pricing Inquiry Modal */}
+        {showBranchForm && (
+          <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100, padding: 20 }}>
+            <div style={{ width: m ? "100%" : 460, maxHeight: "90vh", overflowY: "auto", padding: 32, borderRadius: 16, background: T.navyLight, border: `1px solid ${T.borderLight}`, boxShadow: "0 20px 60px rgba(0,0,0,0.4)" }}>
+              {branchSuccess ? (
+                <div style={{ textAlign: "center", padding: "20px 0" }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 12, background: `${T.teal}18`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: 24, color: T.teal }}>✓</div>
+                  <div style={{ fontSize: 18, fontWeight: 600, color: "#F0F4F8", marginBottom: 8 }}>Thank you!</div>
+                  <div style={{ fontSize: 14, color: T.ghostDim, marginBottom: 20, lineHeight: 1.6 }}>We've received your inquiry and will be in touch within 24 hours to discuss Branch pricing for your team.</div>
+                  <button onClick={() => { setShowBranchForm(false); setBranchSuccess(false); setBranchForm({ name: "", email: "", phone: "", company: "", lo_count: "", notes: "" }); }} style={{ padding: "10px 28px", borderRadius: 8, border: "none", background: T.teal, color: "#0B1D2E", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>Close</button>
+                </div>
+              ) : (
+                <>
+                  <div style={{ marginBottom: 20 }}>
+                    <div style={{ fontSize: 20, fontWeight: 600, color: "#F0F4F8", marginBottom: 4 }}>Branch Pricing Inquiry</div>
+                    <div style={{ fontSize: 13, color: T.ghostDim, lineHeight: 1.5 }}>Tell us about your branch and we'll create a custom plan that fits your team's needs.</div>
+                  </div>
+                  <form onSubmit={handleBranchSubmit}>
+                    <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 11, color: T.ghostDim, marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.5 }}>Name *</div>
+                        <input value={branchForm.name} onChange={e => setBranchForm(f => ({ ...f, name: e.target.value }))} placeholder="Your name" required style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: "#1A3550", color: "#F0F4F8", fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 11, color: T.ghostDim, marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.5 }}>Email *</div>
+                        <input type="email" value={branchForm.email} onChange={e => setBranchForm(f => ({ ...f, email: e.target.value }))} placeholder="you@company.com" required style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: "#1A3550", color: "#F0F4F8", fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 11, color: T.ghostDim, marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.5 }}>Phone</div>
+                        <input value={branchForm.phone} onChange={e => setBranchForm(f => ({ ...f, phone: e.target.value }))} placeholder="808-555-1234" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: "#1A3550", color: "#F0F4F8", fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 11, color: T.ghostDim, marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.5 }}>Company</div>
+                        <input value={branchForm.company} onChange={e => setBranchForm(f => ({ ...f, company: e.target.value }))} placeholder="Your mortgage company" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: "#1A3550", color: "#F0F4F8", fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: 12 }}>
+                      <div style={{ fontSize: 11, color: T.ghostDim, marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.5 }}>Number of Loan Officers</div>
+                      <select value={branchForm.lo_count} onChange={e => setBranchForm(f => ({ ...f, lo_count: e.target.value }))} style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: "#1A3550", color: "#F0F4F8", fontSize: 14, outline: "none", boxSizing: "border-box" }}>
+                        <option value="">Select team size...</option>
+                        <option value="5-10">5–10 LOs</option>
+                        <option value="11-25">11–25 LOs</option>
+                        <option value="26-50">26–50 LOs</option>
+                        <option value="51-100">51–100 LOs</option>
+                        <option value="100+">100+ LOs</option>
+                      </select>
+                    </div>
+                    <div style={{ marginBottom: 16 }}>
+                      <div style={{ fontSize: 11, color: T.ghostDim, marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.5 }}>Additional notes</div>
+                      <textarea value={branchForm.notes} onChange={e => setBranchForm(f => ({ ...f, notes: e.target.value }))} placeholder="Tell us about your team's needs, current tools, or any questions..." rows={3} style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: "#1A3550", color: "#F0F4F8", fontSize: 14, outline: "none", boxSizing: "border-box", resize: "vertical" }} />
+                    </div>
+                    {branchError && <div style={{ fontSize: 12, color: "#FF6B6B", marginBottom: 12, padding: "8px 12px", borderRadius: 6, background: "rgba(255,107,107,0.1)" }}>{branchError}</div>}
+                    <div style={{ display: "flex", gap: 10 }}>
+                      <button type="button" onClick={() => { setShowBranchForm(false); setBranchError(null); }} style={{ flex: 1, padding: "12px 0", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: "transparent", color: T.ghostDim, fontSize: 14, cursor: "pointer" }}>Cancel</button>
+                      <button type="submit" disabled={branchSubmitting} style={{ flex: 1, padding: "12px 0", borderRadius: 8, border: "none", background: branchSubmitting ? T.ghostDim : T.teal, color: "#0B1D2E", fontSize: 14, fontWeight: 600, cursor: branchSubmitting ? "default" : "pointer" }}>{branchSubmitting ? "Submitting..." : "Submit inquiry"}</button>
+                    </div>
+                  </form>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
