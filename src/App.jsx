@@ -71,6 +71,7 @@ function Nav() {
             <a href="#how-it-works" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>How it works</a>
             <a href="#pricing" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>Pricing</a>
           </>}
+          <a href="https://app.dealsync.me" style={{ fontSize: 13, color: T.ghostDim, textDecoration: "none", fontFamily: T.font }}>Log in</a>
           <a href="https://app.dealsync.me" style={{ padding: m ? "7px 16px" : "9px 22px", borderRadius: 8, background: T.teal, color: T.navy, fontSize: m ? 12 : 13, fontWeight: 600, textDecoration: "none", fontFamily: T.font }}>Get early access</a>
         </div>
       </div>
