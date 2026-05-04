@@ -411,9 +411,11 @@ function Pricing() {
     }
   };
 
+  const soloFeatures = ["Everything in Free", "Unlimited partner invites", "Unlimited active deals", "Partner scorecard and analytics", "Lead nurture tracking", "Priority support", "30-day free trial"];
   const tiers = [
     { name: "Realtor Partner", price: "Free", period: "forever", color: T.amber, highlight: false, desc: "For Real Estate Agents invited by their LO partners.", features: ["Unlimited shared deals", "Real-time loan status updates", "Activity feed and notifications", "Conversation notes and history", "Mobile app access"] },
-    { name: "Solo LO", price: "$49", period: "/month", color: T.teal, highlight: true, desc: "For independent originators who want to convert more referrals into closings.", features: ["Everything in Free", "Unlimited partner invites", "Unlimited active deals", "Partner scorecard and analytics", "Lead nurture tracking", "Priority support", "30-day free trial"] },
+    { name: "Solo LO", price: "$49", period: "/month", color: T.teal, highlight: false, desc: "For independent originators who want to convert more referrals into closings.", features: soloFeatures },
+    { name: "Solo LO Annual", price: "$499", period: "/year", color: T.teal, highlight: true, badge: "Save $89", desc: "Same Solo LO plan, billed yearly. Save $89 vs paying monthly.", features: soloFeatures },
   ];
 
   return (
@@ -432,6 +434,7 @@ function Pricing() {
             <FadeIn key={i} delay={i * 0.1}>
               <div style={{ padding: "32px 28px", borderRadius: 14, background: tier.highlight ? `linear-gradient(160deg, ${T.navyMid}, ${T.navyLight})` : T.navyLight, border: `1px solid ${tier.highlight ? T.tealBorder : T.border}`, position: "relative", overflow: "hidden" }}>
                 {tier.highlight && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${T.teal}, ${T.tealDim})` }} />}
+                {tier.badge && <div style={{ position: "absolute", top: 14, right: 14, padding: "3px 8px", borderRadius: 12, background: `${T.teal}22`, border: `1px solid ${T.tealBorder}`, color: T.teal, fontSize: 10, fontWeight: 600, letterSpacing: 0.3 }}>{tier.badge}</div>}
                 <div style={{ fontSize: 13, fontWeight: 600, color: tier.color, marginBottom: 4, letterSpacing: 0.3 }}>{tier.name}</div>
                 <div style={{ marginBottom: 12 }}>
                   <span style={{ fontSize: 42, fontWeight: 700, fontFamily: T.display, color: T.white }}>{tier.price}</span>
