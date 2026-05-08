@@ -386,7 +386,7 @@ function AICoach() {
               <div style={{ borderRadius: 14, background: T.navyLight, border: `1px solid ${T.tealBorder}`, overflow: "hidden", boxShadow: `0 0 60px ${T.tealGlow}` }}>
                 <div style={{ padding: "14px 18px", borderBottom: `1px solid ${T.border}`, background: `linear-gradient(135deg, ${T.surface}, ${T.navyLight})` }}>
                   <div style={{ fontSize: 10, fontWeight: 700, color: T.teal, letterSpacing: 1, textTransform: "uppercase", marginBottom: 2 }}>✦ AI Coach</div>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: T.white, fontFamily: T.display }}>Next move on Nolan Barringer</div>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: T.white, fontFamily: T.display }}>Next move on Nolan Benton</div>
                 </div>
                 <div style={{ padding: "16px 18px" }}>
                   <div style={{ display: "flex", gap: 6, marginBottom: 12 }}>
@@ -796,7 +796,7 @@ function FounderSection() {
           <div style={{ padding: m ? "28px 20px" : "40px 36px", borderRadius: 14, background: T.navyLight, border: `1px solid ${T.borderLight}`, position: "relative" }}>
             <div style={{ position: "absolute", top: -1, left: 40, right: 40, height: 1, background: `linear-gradient(90deg, transparent, ${T.tealBorder}, transparent)` }} />
             <div style={{ fontSize: m ? 16 : 22, fontFamily: T.font, fontWeight: 400, color: T.ghost, lineHeight: 1.7, marginBottom: 24 }}>
-              "I built DealSync because the LO-Realtor relationship is the most important partnership in real estate — and my best Realtor partners and I kept solving the same problem on every file: <span style={{ color: T.teal, fontWeight: 500 }}>keeping each other in the loop.</span> After 25 years of originating in Honolulu, I figured if we need this, every LO-Realtor team does too."
+              "I built DealSync because the LO-Realtor relationship is the most important partnership in real estate — and the hardest one to keep in sync. Every deal lives across too many places: my CRM, the agent's CRM, our texts, our voicemails. After 25 years originating loans in Honolulu, I knew the LOs and Realtors who close the most deals together need <span style={{ color: T.teal, fontWeight: 500 }}>one shared workspace where nothing slips between sides.</span> That's what DealSync is."
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <div style={{ width: 48, height: 48, borderRadius: 10, background: `linear-gradient(135deg, ${T.navyMid}, ${T.slate})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 600, color: T.teal, border: `1px solid ${T.border}` }}>JM</div>
