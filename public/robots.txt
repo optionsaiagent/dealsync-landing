@@ -1,0 +1,11 @@
+# DealSync — robots.txt
+# Canonical host is https://www.dealsync.me
+
+User-agent: *
+Allow: /
+
+# Don't waste crawl budget on the bare apex — it 301s to www anyway,
+# but being explicit removes ambiguity
+Disallow:
+
+Sitemap: https://www.dealsync.me/sitemap.xml

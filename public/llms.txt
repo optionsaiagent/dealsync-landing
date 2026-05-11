@@ -63,7 +63,7 @@ With DealSync:
 
 - **Platform**: Web application (responsive for desktop, tablet, and mobile)
 - **App URL**: https://app.dealsync.me
-- **Landing Page**: https://dealsync.me
+- **Landing Page**: https://www.dealsync.me
 - **Stack**: React frontend, Node.js/Express API, PostgreSQL (Supabase), deployed on Vercel + Railway
 - **AI**: Uses Anthropic Claude API for conversation transcript analysis and data extraction
 - **Email**: Resend for transactional email delivery from notifications@dealsync.me
@@ -74,6 +74,6 @@ DealSync was built by Jay Miller, a Sales Manager and Mortgage Loan Consultant a
 
 ## Contact
 
-- Website: https://dealsync.me
+- Website: https://www.dealsync.me
 - App: https://app.dealsync.me
 - Builder: Jay Miller, Honolulu, HI
