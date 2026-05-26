@@ -520,6 +520,106 @@ function BorrowerPortalShowcase() {
   );
 }
 
+function LetterGeneratorShowcase() {
+  const m = useIsMobile();
+  const letters = [
+    {
+      color: T.sky,
+      tag: "Pre-approval",
+      title: "Realtor asks, you approve",
+      body: "Your realtor partners click ✦ Request letter on any deal you've pre-approved. You review the borrower + property + offer terms, edit the loan product or contingencies, and click Approve. PDF generates on your letterhead and lands in their Documents tab in seconds.",
+    },
+    {
+      color: T.teal,
+      tag: "Conditional approval",
+      title: "Underwriting clearance, branded",
+      body: "When you flip a deal to Conditional Approval, a prompt offers to issue the CLA letter right then. Pre-fills from the pre-approval, lets you add the loan rate, lock in conditions from a chip menu (appraisal, insurance, condo, clear title, rate lock, EMD, funds to close, no material changes), then issues instantly.",
+    },
+    {
+      color: "#5FE3C5",
+      tag: "Final loan approval",
+      title: "Cleared to close, communicated fast",
+      body: "Move to Clear to Close → DealSync prompts you to send the FLA. Funding conditions are baked in (closing docs executed, funds verified, seller-signed deed and CD). Strongest possible \"this loan will close\" signal for the listing agent.",
+    },
+    {
+      color: T.amber,
+      tag: "Verification of Funds",
+      title: "The Hawaii standard, automated",
+      body: "Realtors can bundle a VOF letter alongside any pre-approval request with one checkbox — listing agents in HI ask for both. Or issue standalone from the action bar with one click. Branded, centered \"Funds Verified\" trust badge, the whole transaction summary at a glance.",
+    },
+  ];
+
+  return (
+    <section style={{ padding: m ? "60px 20px" : "100px 32px", position: "relative" }}>
+      <GlowOrb top="20%" left="-15%" size={m ? 250 : 520} color={T.teal} opacity={0.04} />
+      <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+        <FadeIn>
+          <div style={{ textAlign: "center", marginBottom: m ? 36 : 56 }}>
+            <p style={{ fontSize: 12, color: T.teal, fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 12 }}>NEW · Letter generation</p>
+            <h2 style={{ fontSize: m ? 26 : 36, fontWeight: 600, fontFamily: T.display, color: T.white, lineHeight: 1.2 }}>
+              Every mortgage letter,{m ? " " : <br />}
+              <span style={{ fontStyle: "italic", fontWeight: 400, color: T.teal }}>your letterhead, 60 seconds</span>
+            </h2>
+            <p style={{ fontSize: m ? 14 : 16, color: T.ghostDim, marginTop: 16, maxWidth: 720, margin: "16px auto 0", lineHeight: 1.65 }}>
+              Set up your branding once — logo, signature, compliance language. Then issue any letter — <strong style={{ color: T.white }}>pre-approval, conditional approval, final approval, or verification of funds</strong> — in under a minute. Branded PDFs land in your realtor's deal in real time. No copy-paste, no Word template, no compliance worry.
+            </p>
+          </div>
+        </FadeIn>
+
+        {/* Four-letter grid */}
+        <div style={{ display: "grid", gridTemplateColumns: m ? "1fr" : "1fr 1fr", gap: m ? 14 : 20, marginBottom: m ? 32 : 48 }}>
+          {letters.map((l, i) => (
+            <FadeIn key={l.tag} delay={i * 0.06}>
+              <div style={{ padding: m ? 18 : 22, borderRadius: 12, background: T.navyLight, border: `1px solid ${T.border}`, height: "100%" }}>
+                <div style={{ display: "inline-block", padding: "3px 10px", borderRadius: 10, background: `${l.color}18`, border: `1px solid ${l.color}55`, fontSize: 10, fontWeight: 700, color: l.color, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 10 }}>{l.tag}</div>
+                <div style={{ fontSize: m ? 16 : 17, fontWeight: 600, color: T.white, marginBottom: 8, fontFamily: T.display, lineHeight: 1.3 }}>{l.title}</div>
+                <div style={{ fontSize: m ? 13 : 14, color: T.ghostDim, lineHeight: 1.6 }}>{l.body}</div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+
+        {/* Workflow polish row */}
+        <FadeIn delay={0.2}>
+          <div style={{ display: "grid", gridTemplateColumns: m ? "1fr" : "1fr 1fr 1fr", gap: m ? 12 : 16 }}>
+            {[
+              {
+                icon: "✦",
+                title: "Self-service letterhead",
+                desc: "Upload your logo and signature, add your compliance disclosure, and you're done. Branding renders identically on all four letter types.",
+              },
+              {
+                icon: "↻",
+                title: "Re-issue on counter-offers",
+                desc: "Bidding war, escalation clause, or counter accepted? Realtor clicks Re-issue, updates the price, and a fresh letter goes out — same property, new terms.",
+              },
+              {
+                icon: "⚡",
+                title: "Live delivery + notifications",
+                desc: "In-app banner pops on the LO side when a realtor requests. Letters land on the realtor's Documents tab in real time when you approve. No refresh, no waiting.",
+              },
+            ].map((it, i) => (
+              <div key={it.title} style={{ padding: m ? 14 : 18, borderRadius: 10, background: T.surface, border: `1px solid ${T.border}` }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 8, background: T.tealGlow, border: `1px solid ${T.tealBorder}`, color: T.teal, fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>{it.icon}</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: T.white, fontFamily: T.display }}>{it.title}</div>
+                </div>
+                <div style={{ fontSize: 12, color: T.ghostDim, lineHeight: 1.6 }}>{it.desc}</div>
+              </div>
+            ))}
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.3}>
+          <div style={{ textAlign: "center", marginTop: m ? 28 : 40, fontSize: 13, color: T.ghostDim, lineHeight: 1.6, maxWidth: 640, margin: m ? "28px auto 0" : "40px auto 0" }}>
+            <strong style={{ color: T.teal }}>Built for Hawaii agents:</strong> bundle a VOF with every pre-approval request, because listing agents here ask for both. Built to scale: the same letterhead branding works for any LO in any state.
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
 function DailyLoop() {
   const m = useIsMobile();
   const panels = [
@@ -1044,6 +1144,7 @@ export default function LandingPage() {
       <FullJourney />
       <AICoach />
       <BorrowerPortalShowcase />
+      <LetterGeneratorShowcase />
       <ConversationIntel />
       <DailyLoop />
       <ForRealtors />
