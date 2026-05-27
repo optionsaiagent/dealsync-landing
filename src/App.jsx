@@ -526,8 +526,8 @@ function LetterGeneratorShowcase() {
     {
       color: T.sky,
       tag: "Pre-approval",
-      title: "Realtor asks, you approve",
-      body: "Your realtor partners click ✦ Request letter on any deal you've pre-approved. You review the borrower + property + offer terms, edit the loan product or contingencies, and click Approve. PDF generates on your letterhead and lands in their Documents tab in seconds.",
+      title: "Realtor asks — or you send it directly",
+      body: "Your realtor partners click ✦ Request Pre-Approval Letter from any deal you've pre-approved — borrower, property, sales price all pre-fill. You review, optionally edit the loan product or contingencies, and approve. Or — when an agent texts you from the road and the moment matters — issue it yourself in one click. Either way, the PDF lands on your letterhead in their Documents tab in seconds.",
     },
     {
       color: T.teal,
@@ -595,8 +595,8 @@ function LetterGeneratorShowcase() {
               },
               {
                 icon: "⚡",
-                title: "Live delivery + notifications",
-                desc: "In-app banner pops on the LO side when a realtor requests. Letters land on the realtor's Documents tab in real time when you approve. No refresh, no waiting.",
+                title: "Live delivery + smart notifications",
+                desc: "Realtor requests trigger an in-app banner on the LO side with a one-click Review action, plus a persistent header badge so nothing slips through. Letters appear in real time on both sides the moment they're approved — no refresh, no email-tab-switching.",
               },
             ].map((it, i) => (
               <div key={it.title} style={{ padding: m ? 14 : 18, borderRadius: 10, background: T.surface, border: `1px solid ${T.border}` }}>
