@@ -23,6 +23,39 @@ const T = {
   font: "'DM Sans', sans-serif", display: "'Fraunces', serif",
 };
 
+// ─── Product media manifest ───────────────────────────────────────────
+// Drop real captures into /public/media (see /public/media/README.md for
+// the shot list + exact filenames) and set the path here. While a value is
+// null, the page falls back to its hand-built illustrative mockup, so the
+// site always looks complete. Capture with SAMPLE/fake borrower data only.
+//   • Video: short (≤15s), muted, autoplay-loop .mp4 or .webm
+//   • Image: .webp or .png, ~1280px wide
+const MEDIA = {
+  hero: null,        // hero product loop or screenshot, e.g. "/media/hero-coach.mp4"
+  heroPoster: null,  // optional poster image for the hero video
+  letter: null,      // a real generated letter PDF screenshot, e.g. "/media/letter.webp"
+};
+
+// Renders a framed product video or image. Returns null when src is unset,
+// so callers can drop it in next to a fallback mock without showing a gap.
+function Media({ src, poster, alt = "", style = {} }) {
+  if (!src) return null;
+  const isVideo = /\.(mp4|webm|mov)$/i.test(src);
+  const frame = {
+    borderRadius: 14, overflow: "hidden", border: `1px solid ${T.borderLight}`,
+    boxShadow: "0 20px 60px rgba(0,0,0,0.45)", background: T.navyLight, ...style,
+  };
+  return (
+    <div style={frame}>
+      {isVideo ? (
+        <video src={src} poster={poster || undefined} autoPlay muted loop playsInline preload="metadata" style={{ display: "block", width: "100%", height: "auto" }} />
+      ) : (
+        <img src={src} alt={alt} loading="lazy" style={{ display: "block", width: "100%", height: "auto" }} />
+      )}
+    </div>
+  );
+}
+
 function useInView(threshold = 0.15) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -115,6 +148,13 @@ function Hero() {
         <FadeIn delay={0.5}>
           <p style={{ fontSize: 12, color: T.ghostDim, marginTop: 20 }}>No credit card required · Free for Realtors, always</p>
         </FadeIn>
+        {MEDIA.hero && (
+          <FadeIn delay={0.6}>
+            <div style={{ marginTop: m ? 36 : 56 }}>
+              <Media src={MEDIA.hero} poster={MEDIA.heroPoster} alt="DealSync — coaching the next move on a live deal" />
+            </div>
+          </FadeIn>
+        )}
       </div>
     </section>
   );
@@ -198,7 +238,7 @@ function FullJourney() {
   const stages = [
     { num: "01", label: "Referral", color: T.sky, title: "Capture the lead in seconds", desc: "Get a referral from your Realtor partner — or a phone call from a buyer. Click + New deal, or paste your call transcript and let DealSync's AI extract every detail into a shared deal card. Both sides see it instantly.", mockItems: [
       { text: "Lead source: Agent referral — Will Campbell", color: T.sky },
-      { text: "Imported from Plaud transcript · Apr 10", color: T.ghostDim },
+      { text: "Imported from call transcript · Apr 10", color: T.ghostDim },
       { text: "AI extracted: VA eligible · Kapolei/Ewa · 2–3 mo timeline", color: T.amber },
       { text: "Stage: Nurture · Next follow-up: May 15", color: T.teal },
     ]},
@@ -302,7 +342,7 @@ function ConversationIntel() {
                 Every conversation,<br />captured by AI
               </h2>
               <p style={{ fontSize: 15, color: T.ghostDim, lineHeight: 1.7, marginBottom: 20 }}>
-                You had a 20-minute call with a buyer about VA eligibility, DTI concerns, and a July timeline. Instead of that conversation living in your head, paste the transcript from <strong style={{ color: T.amber }}>Plaud, Otter, voice memo, or your own notes</strong> into DealSync. AI extracts the borrower's info, action items, concerns, and timeline into a fresh deal card in 10 seconds.
+                You had a 20-minute call with a buyer about VA eligibility, DTI concerns, and a July timeline. Instead of that conversation living in your head, paste the transcript from <strong style={{ color: T.amber }}>your note-taking app — a voice memo, Plaud, Otter, Fireflies, or your own notes</strong> into DealSync. AI extracts the borrower's info, action items, concerns, and timeline into a fresh deal card in 10 seconds.
               </p>
               <p style={{ fontSize: 15, color: T.ghostDim, lineHeight: 1.7 }}>
                 When that buyer calls back in 8 weeks, both you and your Realtor partner see exactly what was discussed and what the next steps are. No memory gaps. No starting over.
@@ -579,6 +619,15 @@ function LetterGeneratorShowcase() {
           ))}
         </div>
 
+        {MEDIA.letter && (
+          <FadeIn delay={0.1}>
+            <div style={{ maxWidth: 620, margin: m ? "0 auto 32px" : "0 auto 48px" }}>
+              <Media src={MEDIA.letter} alt="A pre-approval letter generated on the LO's letterhead" />
+              <div style={{ textAlign: "center", fontSize: 12, color: T.ghostDim, marginTop: 10, fontStyle: "italic" }}>An actual letter generated in DealSync — your logo, signature, and compliance language.</div>
+            </div>
+          </FadeIn>
+        )}
+
         {/* Workflow polish row */}
         <FadeIn delay={0.2}>
           <div style={{ display: "grid", gridTemplateColumns: m ? "1fr" : "1fr 1fr 1fr", gap: m ? 12 : 16 }}>
@@ -663,7 +712,7 @@ function DailyLoop() {
 function ForRealtors() {
   const m = useIsMobile();
   return (
-    <section style={{ padding: m ? "60px 20px" : "100px 32px", position: "relative" }}>
+    <section id="realtors" style={{ padding: m ? "60px 20px" : "100px 32px", position: "relative" }}>
       <GlowOrb top="-50px" left="20%" size={m ? 250 : 500} color={T.amber} opacity={0.04} />
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
         <FadeIn>
@@ -704,12 +753,9 @@ function ForRealtors() {
 function ValueProps() {
   const m = useIsMobile();
   const props = [
-    { icon: "✦", color: T.teal, title: "AI Coach on every deal", desc: "Click \"Coach me\" and AI reads your notes, classifies the engagement state, and drafts the message to send. Plus a Monday briefing email with the week's top moves." },
-    { icon: "✎", color: T.amber, title: "Conversation import", desc: "Paste a transcript from Plaud, Otter, or your own call notes. AI extracts the borrower's info, timeline, concerns, and action items into a fresh deal card in 10 seconds." },
-    { icon: "★", color: T.amber, title: "Borrower portal you share with one tap", desc: "Generate a live status page for your borrower. They self-serve their questions. You stop answering \"any update?\" texts." },
-    { icon: "◷", color: T.sky, title: "Daily 7am follow-up digest", desc: "Every morning, an email lands with every overdue follow-up plus today's leads. Cold leads stop slipping through cracks." },
     { icon: "↑", color: T.teal, title: "Bulk lead import", desc: "Migrating from a spreadsheet? Paste your existing leads, AI parses the columns and imports them in one shot. 80 leads in 5 minutes." },
     { icon: "▤", color: T.ghost, title: "Role-based views", desc: "LOs see loan milestones. Realtors see property milestones. Both see what they need. Private notes stay private." },
+    { icon: "◷", color: T.amber, title: "Stalled-deal detection", desc: "When a deal hasn't moved in a week, it surfaces on your Needs Attention list automatically — so nothing quietly goes cold." },
   ];
 
   return (
@@ -805,8 +851,8 @@ function Pricing() {
                     </div>
                   ))}
                 </div>
-                <a href={tier.price === "Free" ? "#waitlist" : "https://app.dealsync.me"} style={{ display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, textDecoration: "none", fontFamily: T.font, fontSize: 13, fontWeight: 600, background: tier.highlight ? T.teal : "transparent", color: tier.highlight ? T.navy : T.teal, border: tier.highlight ? "none" : `1px solid ${T.tealBorder}` }}>
-                  {tier.price === "Free" ? "Join when invited" : "Start free trial"}
+                <a href={tier.price === "Free" ? "#realtors" : "https://app.dealsync.me"} style={{ display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, textDecoration: "none", fontFamily: T.font, fontSize: 13, fontWeight: 600, background: tier.highlight ? T.teal : "transparent", color: tier.highlight ? T.navy : T.teal, border: tier.highlight ? "none" : `1px solid ${T.tealBorder}` }}>
+                  {tier.price === "Free" ? "What Realtors get" : "Start free trial"}
                 </a>
               </div>
             </FadeIn>
@@ -997,7 +1043,7 @@ function FinalCTA() {
         </FadeIn>
         <FadeIn delay={0.25}>
           <p style={{ fontSize: 12, color: T.ghostDim, marginTop: 18 }}>
-            Built by a 25-year LO in Honolulu · Trusted by LOs at CMG Home Loans · Free for Realtors, always
+            Built by a 25-year loan officer in Honolulu · Used daily on real deals · Free for Realtors, always
           </p>
         </FadeIn>
       </div>
@@ -1142,9 +1188,9 @@ export default function LandingPage() {
       <PainPoints />
       <ConversionImpact />
       <FullJourney />
+      <LetterGeneratorShowcase />
       <AICoach />
       <BorrowerPortalShowcase />
-      <LetterGeneratorShowcase />
       <ConversationIntel />
       <DailyLoop />
       <ForRealtors />
