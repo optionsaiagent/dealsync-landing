@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Original (pre-optimization) media sources — not deployed
+media-src/

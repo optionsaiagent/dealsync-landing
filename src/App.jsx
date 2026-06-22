@@ -31,9 +31,10 @@ const T = {
 //   • Video: short (≤15s), muted, autoplay-loop .mp4 or .webm
 //   • Image: .webp or .png, ~1280px wide
 const MEDIA = {
-  hero: null,        // hero product loop or screenshot, e.g. "/media/hero-coach.mp4"
-  heroPoster: null,  // optional poster image for the hero video
-  letter: null,      // a real generated letter PDF screenshot, e.g. "/media/letter.webp"
+  hero: "/media/hero-coach.mp4",        // hero product loop (Coach me on a live deal)
+  heroPoster: "/media/deal-detail.webp", // poster frame shown before the video plays
+  letter: "/media/letter.webp",          // a real generated pre-approval letter
+  dashboard: "/media/sample-deal.webp",  // the full pipeline / dashboard view
 };
 
 // Renders a framed product video or image. Returns null when src is unset,
@@ -273,6 +274,13 @@ function FullJourney() {
             <p style={{ fontSize: m ? 14 : 15, color: T.ghostDim, maxWidth: 560, margin: "16px auto 0", lineHeight: 1.6 }}>DealSync doesn't start at escrow. It starts the moment a lead enters your world — and stays with them until they get their keys.</p>
           </div>
         </FadeIn>
+        {MEDIA.dashboard && (
+          <FadeIn delay={0.1}>
+            <div style={{ maxWidth: 960, margin: m ? "0 auto 36px" : "0 auto 56px" }}>
+              <Media src={MEDIA.dashboard} alt="The DealSync pipeline — follow-ups, needs-attention, and every stage at a glance" />
+            </div>
+          </FadeIn>
+        )}
         <div style={{ display: "flex", justifyContent: "center", gap: 4, marginBottom: m ? 32 : 56, flexWrap: m ? "wrap" : "nowrap" }}>
           {stages.map((s, i) => (
             <FadeIn key={i} delay={i * 0.08}>
