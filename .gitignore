@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Original (pre-optimization) media sources — not deployed
 media-src/
+
+# /brag launch-video output (marketing assets, not site files)
+brag-output/
