@@ -79,6 +79,51 @@ function FadeIn({ children, delay = 0, style = {} }) {
   );
 }
 
+// Cloudflare Turnstile site key (public). Bot protection on the public forms.
+const TURNSTILE_SITE_KEY = "0x4AAAAAADsG9LTA1F1s5XKZ";
+
+// Renders a Cloudflare Turnstile widget; reports its token via onToken.
+// Renders nothing when the site key isn't configured. onToken should be stable.
+function TurnstileWidget({ onToken }) {
+  const containerRef = useRef(null);
+  const widgetIdRef = useRef(null);
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY) return;
+    let cancelled = false;
+    const renderWidget = () => {
+      if (cancelled || !containerRef.current || !window.turnstile || widgetIdRef.current != null) return;
+      widgetIdRef.current = window.turnstile.render(containerRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: "dark",
+        callback: (token) => onToken(token),
+        "error-callback": () => onToken(""),
+        "expired-callback": () => onToken(""),
+      });
+    };
+    if (window.turnstile) {
+      renderWidget();
+    } else {
+      let script = document.querySelector("script[data-turnstile]");
+      if (!script) {
+        script = document.createElement("script");
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+        script.async = true;
+        script.defer = true;
+        script.setAttribute("data-turnstile", "1");
+        document.head.appendChild(script);
+      }
+      script.addEventListener("load", renderWidget);
+    }
+    return () => {
+      cancelled = true;
+      try { if (widgetIdRef.current != null && window.turnstile) window.turnstile.remove(widgetIdRef.current); } catch {}
+      widgetIdRef.current = null;
+    };
+  }, [onToken]);
+  if (!TURNSTILE_SITE_KEY) return null;
+  return <div ref={containerRef} style={{ marginBottom: 12, display: "flex", justifyContent: "center" }} />;
+}
+
 function GlowOrb({ top, left, size = 400, color = T.teal, opacity = 0.04 }) {
   return <div style={{ position: "absolute", top, left, width: size, height: size, borderRadius: "50%", background: color, opacity, filter: `blur(${size/3}px)`, pointerEvents: "none" }} />;
 }
@@ -799,10 +844,12 @@ function Pricing() {
   const [branchSubmitting, setBranchSubmitting] = useState(false);
   const [branchSuccess, setBranchSuccess] = useState(false);
   const [branchError, setBranchError] = useState(null);
+  const [branchTurnstile, setBranchTurnstile] = useState("");
 
   const handleBranchSubmit = async (e) => {
     e.preventDefault();
     if (!branchForm.name || !branchForm.email) { setBranchError("Name and email are required"); return; }
+    if (TURNSTILE_SITE_KEY && !branchTurnstile) { setBranchError("Please complete the bot check below."); return; }
     setBranchSubmitting(true);
     setBranchError(null);
     try {
@@ -810,7 +857,7 @@ function Pricing() {
       const res = await fetch(`${API}/api/auth/branch-inquiry`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(branchForm),
+        body: JSON.stringify({ ...branchForm, turnstile_token: branchTurnstile }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to submit");
@@ -926,9 +973,10 @@ function Pricing() {
                       <textarea value={branchForm.notes} onChange={e => setBranchForm(f => ({ ...f, notes: e.target.value }))} placeholder="Tell us about your team's needs, current tools, or any questions..." rows={3} style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: "#1A3550", color: "#F0F4F8", fontSize: 14, outline: "none", boxSizing: "border-box", resize: "vertical" }} />
                     </div>
                     {branchError && <div style={{ fontSize: 12, color: "#FF6B6B", marginBottom: 12, padding: "8px 12px", borderRadius: 6, background: "rgba(255,107,107,0.1)" }}>{branchError}</div>}
+                    <TurnstileWidget onToken={setBranchTurnstile} />
                     <div style={{ display: "flex", gap: 10 }}>
                       <button type="button" onClick={() => { setShowBranchForm(false); setBranchError(null); }} style={{ flex: 1, padding: "12px 0", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: "transparent", color: T.ghostDim, fontSize: 14, cursor: "pointer" }}>Cancel</button>
-                      <button type="submit" disabled={branchSubmitting} style={{ flex: 1, padding: "12px 0", borderRadius: 8, border: "none", background: branchSubmitting ? T.ghostDim : T.teal, color: "#0B1D2E", fontSize: 14, fontWeight: 600, cursor: branchSubmitting ? "default" : "pointer" }}>{branchSubmitting ? "Submitting..." : "Submit inquiry"}</button>
+                      <button type="submit" disabled={branchSubmitting || (TURNSTILE_SITE_KEY && !branchTurnstile)} style={{ flex: 1, padding: "12px 0", borderRadius: 8, border: "none", background: (branchSubmitting || (TURNSTILE_SITE_KEY && !branchTurnstile)) ? T.ghostDim : T.teal, color: "#0B1D2E", fontSize: 14, fontWeight: 600, cursor: (branchSubmitting || (TURNSTILE_SITE_KEY && !branchTurnstile)) ? "default" : "pointer" }}>{branchSubmitting ? "Submitting..." : "Submit inquiry"}</button>
                     </div>
                   </form>
                 </>
@@ -1068,31 +1116,24 @@ function Waitlist() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [turnstile, setTurnstile] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (TURNSTILE_SITE_KEY && !turnstile) { setError("Please complete the bot check below."); return; }
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(
-        "https://nkjfluakvaatkcygwkhj.supabase.co/rest/v1/waitlist",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": "sb_publishable_XHDlAicw8iGxk5obabpNmw_Dt4layfq",
-            "Prefer": "return=minimal",
-          },
-          body: JSON.stringify({ email: email.toLowerCase(), first_name: firstName, last_name: lastName, role }),
-        }
-      );
-      if (res.status === 409 || res.status === 400) {
-        setSubmitted(true);
-      } else if (!res.ok) {
-        throw new Error("Something went wrong. Please try again.");
-      } else {
-        setSubmitted(true);
-      }
+      // Goes through the verified backend endpoint (Turnstile + service-role
+      // insert) rather than a direct anon-key insert.
+      const API = process.env.REACT_APP_API_URL || "https://dealsync-api-production.up.railway.app";
+      const res = await fetch(`${API}/api/auth/waitlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.toLowerCase(), first_name: firstName, last_name: lastName, role, turnstile_token: turnstile }),
+      });
+      if (!res.ok) throw new Error("Something went wrong. Please try again.");
+      setSubmitted(true);
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
@@ -1143,8 +1184,9 @@ function Waitlist() {
                   width: "100%", padding: "14px 16px", borderRadius: 8, border: `1px solid ${T.borderLight}`, background: T.surface, color: T.white, fontSize: 15, fontFamily: T.font, outline: "none", boxSizing: "border-box", marginBottom: 12,
                 }} />
                 {error && <div style={{ fontSize: 12, color: T.coral, marginBottom: 12, padding: "8px 12px", borderRadius: 6, background: "rgba(255,107,107,0.10)" }}>{error}</div>}
-                <button type="submit" disabled={loading} style={{
-                  width: "100%", padding: "14px 0", borderRadius: 8, border: "none", background: T.teal, color: T.navy, fontSize: 15, fontWeight: 600, cursor: loading ? "default" : "pointer", fontFamily: T.font,
+                <TurnstileWidget onToken={setTurnstile} />
+                <button type="submit" disabled={loading || (TURNSTILE_SITE_KEY && !turnstile)} style={{
+                  width: "100%", padding: "14px 0", borderRadius: 8, border: "none", background: T.teal, color: T.navy, fontSize: 15, fontWeight: 600, cursor: (loading || (TURNSTILE_SITE_KEY && !turnstile)) ? "default" : "pointer", fontFamily: T.font,
                   boxShadow: `0 0 40px ${T.tealGlow}`,
                 }}>
                   {loading ? "Joining..." : "Join the waitlist"}
