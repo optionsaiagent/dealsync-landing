@@ -1,0 +1,115 @@
+---
+// Reusable layout for DealSync blog posts: brand styling, SEO head, and
+// Article structured data. Each post passes title/description/date/slug and
+// puts its body in the default <slot/>.
+const { title, description, pubDate, pubDateISO, readingTime, slug } = Astro.props;
+const url = `https://www.dealsync.me/blog/${slug}`;
+const ogImage = "https://www.dealsync.me/og-image.png";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B1D2E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" />
+
+    <title>{title} — DealSync</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="DealSync" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": title,
+      "description": description,
+      "url": url,
+      "datePublished": pubDateISO,
+      "image": ogImage,
+      "author": { "@type": "Person", "name": "Jay Miller", "jobTitle": "Sales Manager & Mortgage Loan Consultant" },
+      "publisher": { "@type": "Organization", "name": "DealSync", "url": "https://www.dealsync.me/" }
+    })} />
+
+    <style>
+      :root {
+        --navy: #0B1D2E; --navy-light: #132B42; --surface: rgba(255,255,255,0.03);
+        --teal: #00D4AA; --amber: #F0A830; --coral: #FF6B6B;
+        --white: #F0F4F8; --ghost: rgba(240,244,248,0.72); --ghost-dim: rgba(240,244,248,0.45);
+        --border: rgba(240,244,248,0.10);
+        --font: 'DM Sans', sans-serif; --display: 'Fraunces', serif;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: var(--navy); color: var(--ghost); font-family: var(--font); line-height: 1.75; -webkit-font-smoothing: antialiased; }
+      a { color: var(--teal); text-decoration: none; }
+      a:hover { opacity: 0.85; }
+      .nav { max-width: 760px; margin: 0 auto; padding: 28px 24px; display: flex; justify-content: space-between; align-items: center; }
+      .logo { font-family: var(--display); font-size: 22px; font-weight: 600; }
+      .logo .deal { color: var(--teal); }
+      .logo .sync { color: var(--white); font-weight: 300; }
+      .nav a.cta { background: var(--teal); color: var(--navy); padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+      article { max-width: 760px; margin: 0 auto; padding: 24px 24px 40px; }
+      .eyebrow { color: var(--teal); font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+      h1 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 5vw, 46px); line-height: 1.12; letter-spacing: -1px; color: var(--white); margin-bottom: 18px; }
+      .meta { font-size: 13px; color: var(--ghost-dim); margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+      article :global(h2) { font-family: var(--display); font-weight: 600; font-size: 26px; color: var(--white); margin: 44px 0 14px; line-height: 1.25; }
+      article :global(h3) { font-weight: 600; font-size: 18px; color: var(--white); margin: 32px 0 10px; }
+      article :global(p) { font-size: 17px; margin-bottom: 20px; }
+      article :global(strong) { color: var(--white); font-weight: 600; }
+      article :global(ul), article :global(ol) { margin: 0 0 22px 22px; }
+      article :global(li) { font-size: 17px; margin-bottom: 10px; }
+      article :global(blockquote) { border-left: 3px solid var(--teal); padding: 4px 0 4px 22px; margin: 28px 0; font-family: var(--display); font-style: italic; font-size: 21px; color: var(--white); line-height: 1.5; }
+      article :global(.stat) { background: var(--navy-light); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 10px; padding: 20px 24px; margin: 26px 0; }
+      article :global(.stat .num) { font-family: var(--display); font-weight: 700; font-size: 36px; color: var(--amber); line-height: 1; }
+      article :global(.stat .txt) { font-size: 15px; color: var(--ghost); margin-top: 8px; }
+      article :global(.stat .src) { font-size: 12px; color: var(--ghost-dim); font-style: italic; margin-top: 6px; }
+      .endcta { max-width: 760px; margin: 12px auto 70px; padding: 0 24px; }
+      .endcta .box { background: linear-gradient(160deg, var(--navy-light), var(--navy)); border: 1px solid rgba(0,212,170,0.25); border-radius: 16px; padding: 36px 32px; text-align: center; }
+      .endcta h2 { font-family: var(--display); font-weight: 600; font-size: 26px; color: var(--white); margin-bottom: 10px; }
+      .endcta p { font-size: 15px; color: var(--ghost); margin-bottom: 22px; }
+      .endcta a { background: var(--teal); color: var(--navy); padding: 13px 30px; border-radius: 10px; font-size: 15px; font-weight: 600; display: inline-block; }
+      footer { max-width: 760px; margin: 0 auto; padding: 30px 24px 50px; border-top: 1px solid var(--border); font-size: 13px; color: var(--ghost-dim); }
+      footer a { color: var(--ghost-dim); }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/" class="logo"><span class="deal">Deal</span><span class="sync">Sync</span></a>
+      <a href="https://app.dealsync.me" class="cta">Start free trial</a>
+    </nav>
+
+    <article>
+      <div class="eyebrow">The follow-up gap</div>
+      <h1>{title}</h1>
+      <div class="meta">By Jay Miller · 25-year loan officer, Honolulu · {pubDate} · {readingTime}</div>
+      <slot />
+    </article>
+
+    <div class="endcta">
+      <div class="box">
+        <h2>Stop losing referrals in the gap.</h2>
+        <p>DealSync is the shared deal room where Loan Officers and Realtors track every lead from first conversation to closing day. Free for Realtors, 30-day trial for LOs.</p>
+        <a href="https://app.dealsync.me">Start your 30-day free trial</a>
+      </div>
+    </div>
+
+    <footer>
+      © 2026 DealSync.me · <a href="/">Home</a> · <a href="/blog">Blog</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
+    </footer>
+  </body>
+</html>
