@@ -11,7 +11,10 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-const FONTS = `@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap');`;
+// Fonts are loaded via a <link rel="stylesheet"> in the page <head> (earlier
+// discovery than a CSS @import). Kept as an empty string so the <style>{FONTS}
+// in the render stays valid without re-requesting the stylesheet.
+const FONTS = ``;
 
 const T = {
   navy: "#0B1D2E", navyLight: "#132B42", navyMid: "#1A3652", slate: "#243B53",
@@ -31,8 +34,10 @@ const T = {
 //   • Video: short (≤15s), muted, autoplay-loop .mp4 or .webm
 //   • Image: .webp or .png, ~1280px wide
 const MEDIA = {
-  hero: "/media/hero-coach.mp4",        // hero product loop (Coach me on a live deal)
+  hero: "/media/hero-coach.mp4",        // hero product loop (Coach me on a live deal) — desktop
   heroPoster: "/media/deal-detail.webp", // poster frame shown before the video plays
+  heroMobile: "/media/hero-vertical.mp4",            // vertical hero loop — phones
+  heroMobilePoster: "/media/hero-vertical-poster.webp",
   letter: "/media/letter.webp",          // a real generated pre-approval letter
   dashboard: "/media/sample-deal.webp",  // the full pipeline / dashboard view
 };
@@ -194,10 +199,14 @@ function Hero() {
         <FadeIn delay={0.5}>
           <p style={{ fontSize: 12, color: T.ghostDim, marginTop: 20 }}>No credit card required · Free for Realtors, always</p>
         </FadeIn>
-        {MEDIA.hero && (
+        {(m ? MEDIA.heroMobile : MEDIA.hero) && (
           <FadeIn delay={0.6}>
-            <div style={{ marginTop: m ? 36 : 56 }}>
-              <Media src={MEDIA.hero} poster={MEDIA.heroPoster} alt="DealSync — coaching the next move on a live deal" />
+            <div style={{ maxWidth: m ? 300 : "100%", margin: m ? "36px auto 0" : "56px auto 0" }}>
+              <Media
+                src={m ? MEDIA.heroMobile : MEDIA.hero}
+                poster={m ? MEDIA.heroMobilePoster : MEDIA.heroPoster}
+                alt="DealSync — the shared deal room for Loan Officers and Realtors"
+              />
             </div>
           </FadeIn>
         )}
