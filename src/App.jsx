@@ -853,7 +853,7 @@ function Pricing() {
     setBranchSubmitting(true);
     setBranchError(null);
     try {
-      const API = process.env.REACT_APP_API_URL || "https://dealsync-api-production.up.railway.app";
+      const API = "https://dealsync-api-production.up.railway.app";
       const res = await fetch(`${API}/api/auth/branch-inquiry`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

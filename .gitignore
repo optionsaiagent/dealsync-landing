@@ -27,3 +27,13 @@ media-src/
 
 # /brag launch-video output (marketing assets, not site files)
 brag-output/
+
+# Astro build output
+dist/
+.astro/
+
+# Agent skill tooling (not part of the site)
+.agents/
+.claude/
+agent/
+skills-lock.json

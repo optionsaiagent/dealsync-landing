@@ -1,0 +1,65 @@
+---
+// Static landing page. Astro renders <LandingPage /> to HTML at build time
+// (great for SEO — crawlers get the real content), then client:load hydrates
+// it so all the interactivity (forms, Turnstile, animations) works.
+import LandingPage from "../App.jsx";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="theme-color" content="#0B1D2E" />
+
+    <!-- Perf: warm up the font origins before the CSS @import requests them -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- SEO -->
+    <title>DealSync — The Shared Deal Room for Loan Officers and Realtors</title>
+    <meta name="description" content="DealSync is the collaborative deal room where Loan Officers and Realtors track every lead from first conversation to closing day. No more forgotten follow-ups. No more lost referrals." />
+    <meta name="keywords" content="mortgage deal room, loan officer realtor collaboration, mortgage lead tracking, LO realtor CRM, real estate deal management, mortgage pipeline, VA loan tracking, referral management" />
+    <link rel="canonical" href="https://www.dealsync.me" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.dealsync.me" />
+    <meta property="og:title" content="DealSync — The Shared Deal Room for LOs and Realtors" />
+    <meta property="og:description" content="Track every lead from first conversation to closing day. The collaboration layer between your CRM and your partner's CRM." />
+    <meta property="og:site_name" content="DealSync" />
+    <meta property="og:image" content="https://www.dealsync.me/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="DealSync — the shared deal room for Loan Officers and Realtors" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DealSync — The Shared Deal Room for LOs and Realtors" />
+    <meta name="twitter:description" content="Track every lead from first conversation to closing day. Built by a 25-year LO in Honolulu." />
+    <meta name="twitter:image" content="https://www.dealsync.me/og-image.png" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "DealSync",
+      "url": "https://www.dealsync.me",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "The shared deal room where Loan Officers and Realtors track every lead from first conversation to closing day.",
+      "offers": { "@type": "Offer", "price": "49", "priceCurrency": "USD", "priceValidUntil": "2027-12-31" },
+      "author": {
+        "@type": "Person",
+        "name": "Jay Miller",
+        "jobTitle": "Sales Manager & Mortgage Loan Consultant",
+        "address": { "@type": "PostalAddress", "addressLocality": "Honolulu", "addressRegion": "HI" }
+      }
+    })} />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <LandingPage client:load />
+  </body>
+</html>
