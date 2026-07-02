@@ -3,6 +3,7 @@
 // (great for SEO — crawlers get the real content), then client:load hydrates
 // it so all the interactivity (forms, Turnstile, animations) works.
 import LandingPage from "../App.jsx";
+import Analytics from "@vercel/analytics/astro";
 ---
 
 <!DOCTYPE html>
@@ -63,5 +64,6 @@ import LandingPage from "../App.jsx";
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <LandingPage client:load />
+    <Analytics />
   </body>
 </html>

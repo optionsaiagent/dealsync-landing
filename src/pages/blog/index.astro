@@ -1,5 +1,6 @@
 ---
 // Blog index — lists posts. Add new entries here as they're published.
+import Analytics from "@vercel/analytics/astro";
 const posts = [
   {
     slug: "5-touch-follow-up-cadence",
@@ -73,5 +74,6 @@ const posts = [
     <footer>
       © 2026 DealSync.me · <a href="/">Home</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
     </footer>
+    <Analytics />
   </body>
 </html>

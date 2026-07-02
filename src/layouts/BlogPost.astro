@@ -2,6 +2,7 @@
 // Reusable layout for DealSync blog posts: brand styling, SEO head, and
 // Article structured data. Each post passes title/description/date/slug and
 // puts its body in the default <slot/>.
+import Analytics from "@vercel/analytics/astro";
 const { title, description, pubDate, pubDateISO, readingTime, slug } = Astro.props;
 const url = `https://www.dealsync.me/blog/${slug}`;
 const ogImage = "https://www.dealsync.me/og-image.png";
@@ -111,5 +112,6 @@ const ogImage = "https://www.dealsync.me/og-image.png";
     <footer>
       © 2026 DealSync.me · <a href="/">Home</a> · <a href="/blog">Blog</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
     </footer>
+    <Analytics />
   </body>
 </html>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Analytics } from "@vercel/analytics/react";
+// Vercel Analytics is injected page-level via @vercel/analytics/astro in
+// index.astro / the blog layout — not here, to avoid double-counting.
 
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(typeof window !== "undefined" && window.innerWidth < breakpoint);
@@ -1165,7 +1166,6 @@ export default function LandingPage() {
       <FAQ />
       <FinalCTA />
       <Footer />
-      <Analytics />
     </div>
   );
 }
