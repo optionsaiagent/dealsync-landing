@@ -21,8 +21,8 @@ no hype, no exclamation points, real stats with sources. End each post with
 |---|--------|------|-------|--------|
 | 0 | ✅ | the-follow-up-gap | The Follow-Up Gap: Why Good Mortgage Referrals Quietly Die | Nurture (hub) |
 | 1 | ✅ | 5-touch-follow-up-cadence | The 5-Touch Follow-Up Cadence That Actually Converts Mortgage Leads | Nurture |
-| 2 | ⏳ | what-to-say-not-ready-buyer | What to Say to a Buyer Who's "Not Ready Yet" | Nurture |
-| 3 | ⬜ | pre-approval-vs-prequalification | Pre-Approval vs. Pre-Qualification vs. Conditional Approval | Borrower |
+| 2 | ✅ | what-to-say-not-ready-buyer | What to Say to a Buyer Who's "Not Ready Yet" | Nurture |
+| 3 | ⏳ | pre-approval-vs-prequalification | Pre-Approval vs. Pre-Qualification vs. Conditional Approval | Borrower |
 | 4 | ⬜ | lo-realtor-relationship-handoff | Why the LO–Realtor Relationship Breaks Down (and How to Fix the Handoff) | Partnership |
 | 5 | ⬜ | get-keep-realtor-referral-partners | How Loan Officers Get (and Keep) More Realtor Referral Partners | Partnership |
 | 6 | ⬜ | re-engage-cold-mortgage-leads | How to Re-Engage a Cold Mortgage Lead Without Being Annoying | Nurture |
@@ -33,14 +33,14 @@ no hype, no exclamation points, real stats with sources. End each post with
 
 ## Per-topic briefs
 
-### 2 — What to Say to a Buyer Who's "Not Ready Yet" ⏳ NEXT
+### 2 — What to Say to a Buyer Who's "Not Ready Yet" ✅ published Aug 3 2026
 - **Keyword/intent:** "what to say to a buyer not ready to buy" · awareness · scripts (shareable)
 - **Angle:** real scripts for the not-ready buyer by reason: just looking, saving down payment, lease ending, credit repair, waiting on a spouse/job. The companion to #1 (cadence = *when*, this = *what*).
 - **Key points:** match the message to the *reason* they're not ready; value-first; anchor to their trigger date; sample messages for each scenario.
 - **DealSync tie-in:** Coach drafts these from the deal notes; the card stores the "why" + the trigger date so the right message fires at the right time.
 - **Links:** ← the-follow-up-gap, ← 5-touch-follow-up-cadence.
 
-### 3 — Pre-Approval vs. Pre-Qualification vs. Conditional Approval
+### 3 — Pre-Approval vs. Pre-Qualification vs. Conditional Approval ⏳ NEXT
 - **Keyword/intent:** "pre-approval vs pre-qualification" · awareness · **high volume evergreen** (traffic magnet)
 - **Angle:** clear explainer of each stage/letter and what it means for an offer; what agents and buyers actually need to know.
 - **DealSync tie-in:** issue any of these (pre-approval, CLA, final approval, VOF) on your letterhead in ~60 seconds.
