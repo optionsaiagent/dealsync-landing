@@ -1,11 +1,53 @@
 ---
 // Reusable layout for DealSync blog posts: brand styling, SEO head, and
-// Article structured data. Each post passes title/description/date/slug and
-// puts its body in the default <slot/>.
+// structured data. Each post passes title/description/date/slug and puts
+// its body in the default <slot/>. Optional AI-search extras:
+//   keyTakeaway     — 40-60 word self-contained answer, rendered in a
+//                     highlighted block up top (the passage AI engines lift)
+//   faqs            — [{ q, a }] rendered as a visible Quick Answers
+//                     section AND emitted as FAQPage JSON-LD (schema must
+//                     always match visible content)
+//   modDate/modDateISO — freshness signal; shows "Updated" in the byline
+//                     and feeds dateModified in the schema
 import Analytics from "@vercel/analytics/astro";
-const { title, description, pubDate, pubDateISO, readingTime, slug } = Astro.props;
+const { title, description, pubDate, pubDateISO, modDate, modDateISO, readingTime, slug, keyTakeaway, faqs } = Astro.props;
 const url = `https://www.dealsync.me/blog/${slug}`;
 const ogImage = "https://www.dealsync.me/og-image.png";
+
+const author = {
+  "@type": "Person",
+  "name": "Jay Miller",
+  "jobTitle": "Sales Manager & Mortgage Loan Consultant",
+  "description": "25-year mortgage industry veteran in Honolulu, Hawaii; founder of DealSync.",
+  "knowsAbout": ["mortgage lending", "loan officer sales", "lead nurturing", "real estate agent partnerships", "VA loans"],
+};
+
+const graph = [
+  {
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    "headline": title,
+    "description": description,
+    "url": url,
+    "mainEntityOfPage": { "@type": "WebPage", "@id": url },
+    "datePublished": pubDateISO,
+    "dateModified": modDateISO || pubDateISO,
+    "image": ogImage,
+    "author": author,
+    "publisher": { "@type": "Organization", "name": "DealSync", "url": "https://www.dealsync.me/", "logo": { "@type": "ImageObject", "url": "https://www.dealsync.me/og-image.png" } },
+  },
+];
+if (faqs && faqs.length > 0) {
+  graph.push({
+    "@type": "FAQPage",
+    "@id": `${url}#faq`,
+    "mainEntity": faqs.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a },
+    })),
+  });
+}
 ---
 
 <!DOCTYPE html>
@@ -37,14 +79,7 @@ const ogImage = "https://www.dealsync.me/og-image.png";
 
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": title,
-      "description": description,
-      "url": url,
-      "datePublished": pubDateISO,
-      "image": ogImage,
-      "author": { "@type": "Person", "name": "Jay Miller", "jobTitle": "Sales Manager & Mortgage Loan Consultant" },
-      "publisher": { "@type": "Organization", "name": "DealSync", "url": "https://www.dealsync.me/" }
+      "@graph": graph,
     })} />
 
     <style>
@@ -79,6 +114,13 @@ const ogImage = "https://www.dealsync.me/og-image.png";
       article :global(.stat .num) { font-family: var(--display); font-weight: 700; font-size: 36px; color: var(--amber); line-height: 1; }
       article :global(.stat .txt) { font-size: 15px; color: var(--ghost); margin-top: 8px; }
       article :global(.stat .src) { font-size: 12px; color: var(--ghost-dim); font-style: italic; margin-top: 6px; }
+      .takeaway { background: rgba(0,212,170,0.06); border: 1px solid rgba(0,212,170,0.25); border-radius: 12px; padding: 18px 22px; margin: 0 0 30px; }
+      .takeaway-label { color: var(--teal); font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px; }
+      .takeaway p { font-size: 16px; color: var(--white); line-height: 1.65; margin: 0; }
+      .faq { margin-top: 50px; padding-top: 8px; border-top: 1px solid var(--border); }
+      .faq h2 { font-family: var(--display); font-weight: 600; font-size: 26px; color: var(--white); margin: 30px 0 6px; }
+      .faq-item h3 { font-weight: 600; font-size: 17px; color: var(--white); margin: 24px 0 8px; }
+      .faq-item p { font-size: 15.5px; margin-bottom: 0; }
       .endcta { max-width: 760px; margin: 12px auto 70px; padding: 0 24px; }
       .endcta .box { background: linear-gradient(160deg, var(--navy-light), var(--navy)); border: 1px solid rgba(0,212,170,0.25); border-radius: 16px; padding: 36px 32px; text-align: center; }
       .endcta h2 { font-family: var(--display); font-weight: 600; font-size: 26px; color: var(--white); margin-bottom: 10px; }
@@ -97,8 +139,25 @@ const ogImage = "https://www.dealsync.me/og-image.png";
     <article>
       <div class="eyebrow">The follow-up gap</div>
       <h1>{title}</h1>
-      <div class="meta">By Jay Miller · 25-year loan officer, Honolulu · {pubDate} · {readingTime}</div>
+      <div class="meta">By Jay Miller · 25-year loan officer, Honolulu · {pubDate}{modDate ? ` · Updated ${modDate}` : ""} · {readingTime}</div>
+      {keyTakeaway && (
+        <div class="takeaway">
+          <div class="takeaway-label">The short answer</div>
+          <p>{keyTakeaway}</p>
+        </div>
+      )}
       <slot />
+      {faqs && faqs.length > 0 && (
+        <section class="faq">
+          <h2>Quick answers</h2>
+          {faqs.map((f) => (
+            <div class="faq-item">
+              <h3>{f.q}</h3>
+              <p>{f.a}</p>
+            </div>
+          ))}
+        </section>
+      )}
     </article>
 
     <div class="endcta">
