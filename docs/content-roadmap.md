@@ -1,8 +1,7 @@
 # DealSync content roadmap
 
 The blog's job: compound into organic search traffic and position DealSync (the
-shared LO–Realtor deal room) as the answer. Cadence: **one deep post every 2
-weeks**. Each post is published as `src/pages/blog/<slug>.astro` using the
+shared LO–Realtor deal room) as the answer. Cadence: **one deep post every week** (Mondays). Each post is published as `src/pages/blog/<slug>.astro` using the
 `BlogPost` layout, added to `src/pages/blog/index.astro` (newest first) and
 `public/sitemap.xml`, and linked to/from its cluster siblings.
 
@@ -87,7 +86,7 @@ no hype, no exclamation points, real stats with sources. End each post with
 - **DealSync tie-in:** 60-second branded letters.
 - **Links:** ← pre-approval-vs-prequalification.
 
-## How the biweekly job works
+## How the weekly job works
 1. Find the topic marked ⏳ (or the lowest-numbered ⬜ if none is ⏳).
 2. Draft it per its brief + the voice rules, ~1,400–1,800 words, as a new
    `src/pages/blog/<slug>.astro` using the `BlogPost` layout.
