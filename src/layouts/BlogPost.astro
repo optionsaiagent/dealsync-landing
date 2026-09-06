@@ -114,6 +114,11 @@ if (faqs && faqs.length > 0) {
       article :global(.stat .num) { font-family: var(--display); font-weight: 700; font-size: 36px; color: var(--amber); line-height: 1; }
       article :global(.stat .txt) { font-size: 15px; color: var(--ghost); margin-top: 8px; }
       article :global(.stat .src) { font-size: 12px; color: var(--ghost-dim); font-style: italic; margin-top: 6px; }
+      article :global(.tablewrap) { overflow-x: auto; margin: 26px 0; }
+      article :global(table) { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+      article :global(th) { text-align: left; font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--teal); padding: 10px 14px; border-bottom: 1px solid rgba(0,212,170,0.3); }
+      article :global(td) { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--ghost); }
+      article :global(td:first-child) { color: var(--white); font-weight: 600; white-space: nowrap; }
       .takeaway { background: rgba(0,212,170,0.06); border: 1px solid rgba(0,212,170,0.25); border-radius: 12px; padding: 18px 22px; margin: 0 0 30px; }
       .takeaway-label { color: var(--teal); font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px; }
       .takeaway p { font-size: 16px; color: var(--white); line-height: 1.65; margin: 0; }
