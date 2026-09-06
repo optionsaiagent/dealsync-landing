@@ -21,8 +21,8 @@ no hype, no exclamation points, real stats with sources. End each post with
 | 0 | ✅ | the-follow-up-gap | The Follow-Up Gap: Why Good Mortgage Referrals Quietly Die | Nurture (hub) |
 | 1 | ✅ | 5-touch-follow-up-cadence | The 5-Touch Follow-Up Cadence That Actually Converts Mortgage Leads | Nurture |
 | 2 | ✅ | what-to-say-not-ready-buyer | What to Say to a Buyer Who's "Not Ready Yet" | Nurture |
-| 3 | ⏳ | pre-approval-vs-prequalification | Pre-Approval vs. Pre-Qualification vs. Conditional Approval | Borrower |
-| 4 | ⬜ | lo-realtor-relationship-handoff | Why the LO–Realtor Relationship Breaks Down (and How to Fix the Handoff) | Partnership |
+| 3 | ✅ | pre-approval-vs-prequalification | Pre-Approval vs. Pre-Qualification vs. Conditional Approval | Borrower |
+| 4 | ⏳ | lo-realtor-relationship-handoff | Why the LO–Realtor Relationship Breaks Down (and How to Fix the Handoff) | Partnership |
 | 5 | ⬜ | get-keep-realtor-referral-partners | How Loan Officers Get (and Keep) More Realtor Referral Partners | Partnership |
 | 6 | ⬜ | re-engage-cold-mortgage-leads | How to Re-Engage a Cold Mortgage Lead Without Being Annoying | Nurture |
 | 7 | ⬜ | any-update-status-text-loop | The "Any Update?" Problem: Ending the Status-Check Text Loop | Borrower |
@@ -39,13 +39,13 @@ no hype, no exclamation points, real stats with sources. End each post with
 - **DealSync tie-in:** Coach drafts these from the deal notes; the card stores the "why" + the trigger date so the right message fires at the right time.
 - **Links:** ← the-follow-up-gap, ← 5-touch-follow-up-cadence.
 
-### 3 — Pre-Approval vs. Pre-Qualification vs. Conditional Approval ⏳ NEXT
+### 3 — Pre-Approval vs. Pre-Qualification vs. Conditional Approval ✅ published Sep 6 2026
 - **Keyword/intent:** "pre-approval vs pre-qualification" · awareness · **high volume evergreen** (traffic magnet)
 - **Angle:** clear explainer of each stage/letter and what it means for an offer; what agents and buyers actually need to know.
 - **DealSync tie-in:** issue any of these (pre-approval, CLA, final approval, VOF) on your letterhead in ~60 seconds.
 - **Links:** → fast-pre-approval-letters-win-offers, → keep-borrowers-engaged.
 
-### 4 — Why the LO–Realtor Relationship Breaks Down (and How to Fix the Handoff)
+### 4 — Why the LO–Realtor Relationship Breaks Down (and How to Fix the Handoff) ⏳ NEXT
 - **Keyword/intent:** "loan officer realtor relationship" / "lo realtor partnership" · awareness · thought leadership
 - **Angle:** extends the cornerstone's "referral black hole" into the partnership lens — two CRMs, no shared visibility, the broken handoff.
 - **DealSync tie-in:** the shared deal room is the structural fix.
