@@ -45,7 +45,7 @@ no hype, no exclamation points, real stats with sources. End each post with
 - **DealSync tie-in:** issue any of these (pre-approval, CLA, final approval, VOF) on your letterhead in ~60 seconds.
 - **Links:** → fast-pre-approval-letters-win-offers, → keep-borrowers-engaged.
 
-### 4 — Why the LO–Realtor Relationship Breaks Down (and How to Fix the Handoff) ✅ published Sep 7 2026
+### 4 — Why the LO–Realtor Relationship Breaks Down (and How to Fix the Handoff) ✅ published Sep 24 2026
 - **Keyword/intent:** "loan officer realtor relationship" / "lo realtor partnership" · awareness · thought leadership
 - **Angle:** extends the cornerstone's "referral black hole" into the partnership lens — two CRMs, no shared visibility, the broken handoff.
 - **DealSync tie-in:** the shared deal room is the structural fix.
