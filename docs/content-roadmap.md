@@ -23,8 +23,8 @@ no hype, no exclamation points, real stats with sources. End each post with
 | 2 | ✅ | what-to-say-not-ready-buyer | What to Say to a Buyer Who's "Not Ready Yet" | Nurture |
 | 3 | ✅ | pre-approval-vs-prequalification | Pre-Approval vs. Pre-Qualification vs. Conditional Approval | Borrower |
 | 4 | ✅ | lo-realtor-relationship-handoff | Why the LO–Realtor Relationship Breaks Down (and How to Fix the Handoff) | Partnership |
-| 5 | ⏳ | get-keep-realtor-referral-partners | How Loan Officers Get (and Keep) More Realtor Referral Partners | Partnership |
-| 6 | ⬜ | re-engage-cold-mortgage-leads | How to Re-Engage a Cold Mortgage Lead Without Being Annoying | Nurture |
+| 5 | ✅ | get-keep-realtor-referral-partners | How Loan Officers Get (and Keep) More Realtor Referral Partners | Partnership |
+| 6 | ⏳ | re-engage-cold-mortgage-leads | How to Re-Engage a Cold Mortgage Lead Without Being Annoying | Nurture |
 | 7 | ⬜ | any-update-status-text-loop | The "Any Update?" Problem: Ending the Status-Check Text Loop | Borrower |
 | 8 | ⬜ | keep-borrowers-engaged | How to Keep a Borrower Engaged from Pre-Approval to Closing | Borrower |
 | 9 | ⬜ | cost-of-a-forgotten-follow-up | The Real Cost of a Forgotten Follow-Up: A Loan Officer's Math | Nurture |
@@ -51,13 +51,13 @@ no hype, no exclamation points, real stats with sources. End each post with
 - **DealSync tie-in:** the shared deal room is the structural fix.
 - **Links:** ← the-follow-up-gap; → get-keep-realtor-referral-partners.
 
-### 5 — How LOs Get (and Keep) More Realtor Referral Partners ⏳ NEXT
+### 5 — How LOs Get (and Keep) More Realtor Referral Partners ✅ published Sep 28 2026
 - **Keyword/intent:** "how to get realtor referrals as a loan officer" · awareness/consideration · **high LO intent**
 - **Angle:** the playbook to earn agent referrals + the retention half nobody covers (be the LO who makes the agent look good).
 - **DealSync tie-in:** shared visibility + status links make you the partner agents keep.
 - **Links:** ← lo-realtor-relationship-handoff.
 
-### 6 — How to Re-Engage a Cold Mortgage Lead Without Being Annoying
+### 6 — How to Re-Engage a Cold Mortgage Lead Without Being Annoying ⏳ NEXT
 - **Keyword/intent:** "re-engage cold leads mortgage" · awareness
 - **Angle:** value-first re-engagement playbook for leads quiet 60+ days.
 - **DealSync tie-in:** stalled-deal detection surfaces them; Coach's cold-lead pivot.
