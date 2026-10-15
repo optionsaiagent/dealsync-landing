@@ -24,8 +24,8 @@ no hype, no exclamation points, real stats with sources. End each post with
 | 3 | ✅ | pre-approval-vs-prequalification | Pre-Approval vs. Pre-Qualification vs. Conditional Approval | Borrower |
 | 4 | ✅ | lo-realtor-relationship-handoff | Why the LO–Realtor Relationship Breaks Down (and How to Fix the Handoff) | Partnership |
 | 5 | ✅ | get-keep-realtor-referral-partners | How Loan Officers Get (and Keep) More Realtor Referral Partners | Partnership |
-| 6 | ⏳ | re-engage-cold-mortgage-leads | How to Re-Engage a Cold Mortgage Lead Without Being Annoying | Nurture |
-| 7 | ⬜ | any-update-status-text-loop | The "Any Update?" Problem: Ending the Status-Check Text Loop | Borrower |
+| 6 | ✅ | re-engage-cold-mortgage-leads | How to Re-Engage a Cold Mortgage Lead Without Being Annoying | Nurture |
+| 7 | ⏳ | any-update-status-text-loop | The "Any Update?" Problem: Ending the Status-Check Text Loop | Borrower |
 | 8 | ⬜ | keep-borrowers-engaged | How to Keep a Borrower Engaged from Pre-Approval to Closing | Borrower |
 | 9 | ⬜ | cost-of-a-forgotten-follow-up | The Real Cost of a Forgotten Follow-Up: A Loan Officer's Math | Nurture |
 | 10 | ⬜ | fast-pre-approval-letters-win-offers | How Fast Pre-Approval Letters Win Offers in a Hot Market | Borrower |
@@ -57,13 +57,13 @@ no hype, no exclamation points, real stats with sources. End each post with
 - **DealSync tie-in:** shared visibility + status links make you the partner agents keep.
 - **Links:** ← lo-realtor-relationship-handoff.
 
-### 6 — How to Re-Engage a Cold Mortgage Lead Without Being Annoying ⏳ NEXT
+### 6 — How to Re-Engage a Cold Mortgage Lead Without Being Annoying ✅ published Oct 15 2026
 - **Keyword/intent:** "re-engage cold leads mortgage" · awareness
 - **Angle:** value-first re-engagement playbook for leads quiet 60+ days.
 - **DealSync tie-in:** stalled-deal detection surfaces them; Coach's cold-lead pivot.
 - **Links:** ← the-follow-up-gap, ← 5-touch-follow-up-cadence.
 
-### 7 — The "Any Update?" Problem: Ending the Status-Check Text Loop
+### 7 — The "Any Update?" Problem: Ending the Status-Check Text Loop ⏳ NEXT
 - **Keyword/intent:** "real estate transaction communication" · awareness
 - **Angle:** the constant status-chasing between agent/LO/borrower, and how shared visibility ends it.
 - **DealSync tie-in:** borrower portal + shared status.
