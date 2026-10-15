@@ -260,7 +260,7 @@ function ConversionImpact() {
   const m = useIsMobile();
   const stats = [
     { value: "80%", label: "of mortgage leads require nurturing before making a decision", source: "Mortgage Bankers Association", color: T.coral },
-    { value: "70%", label: "of homebuyers only interview one agent before deciding to work with them", source: "National Association of Realtors", color: T.teal },
+    { value: "74%", label: "of homebuyers only interview one agent before deciding to work with them", source: "NAR, 2025 Profile of Home Buyers and Sellers", color: T.teal },
     { value: "5+", label: "follow-up contacts needed to close — yet 44% of agents stop after one", source: "National Sales Executive Association / Inman", color: T.amber },
   ];
 
