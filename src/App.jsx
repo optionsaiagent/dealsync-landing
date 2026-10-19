@@ -1,21 +1,21 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 // Vercel Analytics is injected page-level via @vercel/analytics/astro in
 // index.astro / the blog layout — not here, to avoid double-counting.
 
+// HYDRATION RULE: this component is SSR'd by Astro (client:load), so the
+// first client render must produce exactly what the server produced. Never
+// read window/innerWidth/Date in render — start with the server value and
+// switch in an effect. Violations surface as React #418 in the console.
 function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(typeof window !== "undefined" && window.innerWidth < breakpoint);
-  useEffect(() => {
+  const [isMobile, setIsMobile] = useState(false); // server value
+  useLayoutEffect(() => {
     const handler = () => setIsMobile(window.innerWidth < breakpoint);
+    handler(); // runs after hydration, before paint — no mismatch, minimal flash
     window.addEventListener("resize", handler);
     return () => window.removeEventListener("resize", handler);
   }, [breakpoint]);
   return isMobile;
 }
-
-// Fonts are loaded via a <link rel="stylesheet"> in the page <head> (earlier
-// discovery than a CSS @import). Kept as an empty string so the <style>{FONTS}
-// in the render stays valid without re-requesting the stylesheet.
-const FONTS = ``;
 
 const T = {
   navy: "#0B1D2E", navyLight: "#132B42", navyMid: "#1A3652", slate: "#243B53",
@@ -1138,7 +1138,10 @@ function Footer() {
 export default function LandingPage() {
   return (
     <div style={{ fontFamily: T.font, background: T.navy, color: T.white, minHeight: "100vh", overflowX: "hidden", position: "relative" }}>
-      <style>{FONTS}{`
+      {/* Fonts load via <link> in the page <head>. Keep this a SINGLE string
+          child — React's server renderer emits an empty <style> for multiple
+          children, which hydration then rejects (#418). */}
+      <style>{`
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         * { box-sizing: border-box; margin: 0; padding: 0; }
